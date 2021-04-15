@@ -1,9 +1,8 @@
 ﻿using ATS.WEB.Data.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using ATS.WEB.Data.Seeds;
+using Microsoft.AspNetCore.Identity;
 
 namespace ATS.WEB.Data
 {
@@ -17,5 +16,12 @@ namespace ATS.WEB.Data
         public DbSet<Cathedra> Cathedras { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Student> Students { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder) {
+            base.OnModelCreating(builder);
+
+            builder.Seed(new IdentityRole());   
+        }
+
     }
 }
