@@ -20,7 +20,7 @@ namespace ATS.WEB.Data
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
 
-            builder.Seed(new IdentityRole());   
+            builder.SeedRoles();   
         }
 
     }

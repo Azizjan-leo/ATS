@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATS.WEB.Data.Seeds {
     public class DefaultUsers {
-        public static async Task SeedSuperAdminAsync(UserManager<ApplicationUser> userManager) {
+        public static async Task SeedAdminAsync(UserManager<ApplicationUser> userManager) {
             var defaultUser = new ApplicationUser {
                 UserName = "admin@gmail.com",
                 Email = "admin@gmail.com",
