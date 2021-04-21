@@ -1,7 +1,6 @@
 ﻿using ATS.WEB.Data.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ATS.WEB.Data.Seeds;
 using Microsoft.AspNetCore.Identity;
 
 namespace ATS.WEB.Data
@@ -20,7 +19,11 @@ namespace ATS.WEB.Data
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
 
-            builder.Seed(new IdentityRole());   
+            builder.Entity<IdentityRole>().HasData(
+              new IdentityRole(Enums.Roles.Admin.ToString()),
+              new IdentityRole(Enums.Roles.Teacher.ToString()),
+              new IdentityRole(Enums.Roles.Student.ToString())
+              );
         }
 
     }

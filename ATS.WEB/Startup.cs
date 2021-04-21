@@ -1,4 +1,6 @@
 using ATS.WEB.Data;
+using ATS.WEB.Data.Entities;
+using ATS.WEB.Data.Seeds;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,13 +34,16 @@ namespace ATS.WEB
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddTransient<Seeder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seeder seeder, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -53,6 +59,8 @@ namespace ATS.WEB
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            
+            seeder.SeedData(userManager, roleManager);
 
             app.UseRouting();
 
@@ -63,6 +71,8 @@ namespace ATS.WEB
             {
                 endpoints.MapRazorPages();
             });
+
+            
         }
     }
 }
