@@ -9,34 +9,36 @@ using System.Threading.Tasks;
 
 namespace ATS.WEB.Data.Seeds {
     public class Seeder {
-        private readonly ApplicationDbContext _applicationDbContext;
         private readonly AppSettings _appSettings;
-        private readonly RoleStore<IdentityRole> _roleStore;
-        private readonly UserStore<ApplicationUser> _userStore;
-        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public Seeder(ApplicationDbContext applicationDbContext, IOptions<AppSettings> options, RoleManager<IdentityRole> roleManager) {
-            _applicationDbContext = applicationDbContext;
+        public Seeder(IOptions<AppSettings> options) {
             _appSettings = options.Value;
-            _roleStore = new RoleStore<IdentityRole>(_applicationDbContext);
-            _userStore = new UserStore<ApplicationUser>(_applicationDbContext);
-            _roleManager = roleManager;
         }
-        public async Task SeedRoles() {
-            foreach (var role in Enum.GetValues(typeof(Roles))) { 
-                if (!_applicationDbContext.Roles.Any(r => r.Name == role.ToString())) {
-                    await _roleStore.CreateAsync(new IdentityRole(role.ToString()));
+
+        public void SeedData(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager) {
+            SeedRoles(roleManager);
+            SeedUsers(userManager);
+        }
+
+        private void SeedRoles(RoleManager<IdentityRole> roleManager) {
+            foreach (var roleName in Enum.GetValues(typeof(Roles))) {
+                var name = roleName.ToString();
+                if (!roleManager.RoleExistsAsync(name).Result) {
+                    var role = new IdentityRole {
+                        Name = name,
+                        NormalizedName = name.ToUpper()
+                    };
+                    roleManager.CreateAsync(role).Wait();
                 }
             }
 
-            await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task SeedAdminUser() {
+        private void SeedUsers(UserManager<ApplicationUser> userManager) {
 
             var user = new ApplicationUser {
                 Name = Roles.Admin.ToString(),
-                UserName =  _appSettings.AdminEmail,
+                UserName = _appSettings.AdminEmail,
                 NormalizedUserName = _appSettings.AdminEmail.ToUpper(),
                 Email = _appSettings.AdminEmail,
                 NormalizedEmail = _appSettings.AdminEmail.ToUpper(),
@@ -44,23 +46,19 @@ namespace ATS.WEB.Data.Seeds {
                 LockoutEnabled = false,
                 SecurityStamp = Guid.NewGuid().ToString()
             };
-
-            if (!_applicationDbContext.Roles.Any(r => r.Name == Roles.Admin.ToString())) {
-                await _roleStore.CreateAsync(new IdentityRole { Name = Roles.Admin.ToString() });
-            }
-            var admin = _applicationDbContext.Users.Where(x => x.Email == _appSettings.AdminEmail).FirstOrDefault();
+            
+            var admin = userManager.FindByEmailAsync(_appSettings.AdminEmail).Result;
         
 
             if (admin == null) {
-                var password = new PasswordHasher<ApplicationUser>();
-                var hashed = password.HashPassword(user, _appSettings.AdminPassword);
-                user.PasswordHash = hashed;
+                //var password = new PasswordHasher<ApplicationUser>();
+                //var hashed = password.HashPassword(user, _appSettings.AdminPassword);
+                //user.PasswordHash = hashed;
         
-                await _userStore.CreateAsync(user);
+                userManager.CreateAsync(user, _appSettings.AdminPassword).Wait();
             }
              
-            await _userStore.AddToRoleAsync(user, Roles.Admin.ToString());
-            await _applicationDbContext.SaveChangesAsync();
+            userManager.AddToRoleAsync(user, Roles.Admin.ToString()).Wait();
         }
     }
 }

@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -42,7 +43,7 @@ namespace ATS.WEB
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seeder seeder)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seeder seeder, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -58,9 +59,8 @@ namespace ATS.WEB
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
-            seeder.SeedRoles();
-            seeder.SeedAdminUser();
+            
+            seeder.SeedData(userManager, roleManager);
 
             app.UseRouting();
 
