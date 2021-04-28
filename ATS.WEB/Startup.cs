@@ -20,12 +20,14 @@ namespace ATS.WEB
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            Env = env;
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Env { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -37,7 +39,12 @@ namespace ATS.WEB
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddRazorPages();
+
+            var builder = services.AddRazorPages();
+            if (Env.IsDevelopment()) {
+                builder.AddRazorRuntimeCompilation();
+            }                
+                
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddTransient<Seeder>();
         }
@@ -66,14 +73,18 @@ namespace ATS.WEB
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+         
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+        
                 endpoints.MapControllerRoute(
                   name: "default",
                   pattern: "{controller=Home}/{action=Index}/{id?}");
-                });
+                endpoints.MapControllerRoute(
+                   name: "areas",
+                   pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+            });
 
             
         }

@@ -1,5 +1,5 @@
-﻿@using WEB.Data.Entities;
-@using WEB.Enums;
+﻿@using ATS.WEB.Data.Entities;
+@using ATS.WEB.Enums;
 @inject SignInManager<ApplicationUser> SignInManager
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +24,7 @@
                         @if (SignInManager.IsSignedIn(User)) {
                             @if (User.IsInRole(Roles.Admin.ToString())) { 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-page="/Home/Index">Рабочий кабинет</a>
+                            <a class="nav-link text-dark" asp-area="Admin" asp-page="/Users/Index">Пользователи</a>
                         </li>
                             }
                         }
