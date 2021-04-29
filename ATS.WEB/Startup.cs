@@ -1,6 +1,7 @@
 using ATS.WEB.Data;
 using ATS.WEB.Data.Entities;
 using ATS.WEB.Data.Seeds;
+using ATS.WEB.Enums;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -39,8 +40,12 @@ namespace ATS.WEB
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            var builder = services.AddRazorPages();
+            services.AddAuthorization(options => {
+                options.AddPolicy(RequireRole.RequireAdminRole.ToString(), policy => policy.RequireRole(Roles.Admin.ToString()));
+            });
+            var builder = services.AddRazorPages(options => {
+                options.Conventions.AuthorizeFolder("Admin", RequireRole.RequireAdminRole.ToString());
+            });
             if (Env.IsDevelopment()) {
                 builder.AddRazorRuntimeCompilation();
             }                
