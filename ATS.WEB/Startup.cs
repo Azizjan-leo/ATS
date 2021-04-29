@@ -44,7 +44,8 @@ namespace ATS.WEB
                 options.AddPolicy(RequireRole.RequireAdminRole.ToString(), policy => policy.RequireRole(Roles.Admin.ToString()));
             });
             var builder = services.AddRazorPages(options => {
-                options.Conventions.AuthorizeFolder("Admin", RequireRole.RequireAdminRole.ToString());
+                options.Conventions.AuthorizeAreaFolder("Admin", "/", RequireRole.RequireAdminRole.ToString());
+                //options.Conventions.AuthorizeAreaPage(areaName: "Admin", pageName: "/Home/Index", policy: RequireRole.RequireAdminRole.ToString());
             });
             if (Env.IsDevelopment()) {
                 builder.AddRazorRuntimeCompilation();
