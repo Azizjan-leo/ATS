@@ -4,4 +4,8 @@
         Teacher,
         Student
     }
+
+    public enum RequireRole {
+        RequireAdminRole
+    }
 }
