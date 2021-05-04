@@ -1,0 +1,10 @@
+﻿@page
+@model ATS.WEB.Areas.Admin.Pages.Users.IndexModel
+@{
+}
+
+@if (Model.Users.Any()) {
+    foreach (var user in Model.Users) {
+        <p>@user.Email</p>
+    }
+}
