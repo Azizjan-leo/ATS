@@ -1,10 +1,11 @@
 ﻿@page
 @model ATS.WEB.Areas.Admin.Pages.Users.IndexModel
 @{
+    ViewData["Title"] = "Пользователи";
 }
-
+<a class="btn btn-info" href=""></a>
 @if (Model.Users.Any()) {
     foreach (var user in Model.Users) {
-        <p>@user.Email</p>
+        <p>@user.Name @user.Email</p>
     }
 }
