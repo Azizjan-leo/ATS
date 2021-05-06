@@ -1,0 +1,51 @@
+﻿@page
+@model ATS.WEB.Areas.Admin.Pages.Users.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>ApplicationUser2</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ApplicationUser2.Id" class="control-label"></label>
+                <input asp-for="ApplicationUser2.Id" class="form-control" />
+                <span asp-validation-for="ApplicationUser2.Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationUser2.Name" class="control-label"></label>
+                <input asp-for="ApplicationUser2.Name" class="form-control" />
+                <span asp-validation-for="ApplicationUser2.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationUser2.Role" class="control-label"></label>
+                <input asp-for="ApplicationUser2.Role" class="form-control" />
+                <span asp-validation-for="ApplicationUser2.Role" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationUser2.Email" class="control-label"></label>
+                <input asp-for="ApplicationUser2.Email" class="form-control" />
+                <span asp-validation-for="ApplicationUser2.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationUser2.Password" class="control-label"></label>
+                <input asp-for="ApplicationUser2.Password" class="form-control" />
+                <span asp-validation-for="ApplicationUser2.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+

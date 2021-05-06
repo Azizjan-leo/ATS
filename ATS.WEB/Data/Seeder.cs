@@ -48,15 +48,9 @@ namespace ATS.WEB.Data.Seeds {
             };
             
             var admin = userManager.FindByEmailAsync(_appSettings.AdminEmail).Result;
-        
 
-            if (admin == null) {
-                //var password = new PasswordHasher<ApplicationUser>();
-                //var hashed = password.HashPassword(user, _appSettings.AdminPassword);
-                //user.PasswordHash = hashed;
-        
+            if (admin == null)
                 userManager.CreateAsync(user, _appSettings.AdminPassword).Wait();
-            }
              
             userManager.AddToRoleAsync(user, Roles.Admin.ToString()).Wait();
         }
