@@ -21,13 +21,15 @@ namespace ATS.WEB.Areas.Admin.Pages.Users {
 
         public IActionResult OnGet()
         {
-            Input = new InputModel();
+            Input = new InputModel {
+                RolesList = Enum.GetNames(typeof(Role)).Select(x => new SelectListItem { Text = x, Value = x }).ToList()
+            };
             return Page();
         }
 
         [BindProperty]
         public InputModel Input { get; set; }
-
+        public DayOfWeek DayOfWeek { get; set; }
         public class InputModel {
             public UserViewModel ApplicationUser { get; set; }
 
@@ -42,8 +44,8 @@ namespace ATS.WEB.Areas.Admin.Pages.Users {
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            public List<SelectListItem> RolesList { get; set; } = Enum.GetNames(typeof(Role)).Select(x => new SelectListItem { Text = x, Value = x}).ToList();
-
+            public string Role { get; set; }
+            public List<SelectListItem> RolesList { get; set; }
         }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD

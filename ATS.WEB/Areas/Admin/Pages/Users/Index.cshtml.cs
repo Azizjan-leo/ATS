@@ -22,7 +22,7 @@ namespace ATS.WEB.Areas.Admin.Pages.Users {
             ApplicationUsers = new List<UserViewModel>();
             foreach (var user in users) {
                 var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
-                ApplicationUsers.Add(new(user.Id, user.Email, user.Name, role));
+                ApplicationUsers.Add(new (){ Id = user.Id, Name = user.Name, Email = user.Email, Role = role});
             }
         }
     }
