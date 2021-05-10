@@ -21,7 +21,7 @@ namespace ATS.WEB.Data.Seeds {
         }
 
         private void SeedRoles(RoleManager<IdentityRole> roleManager) {
-            foreach (var roleName in Enum.GetValues(typeof(Roles))) {
+            foreach (var roleName in Enum.GetValues(typeof(Role))) {
                 var name = roleName.ToString();
                 if (!roleManager.RoleExistsAsync(name).Result) {
                     var role = new IdentityRole {
@@ -36,11 +36,10 @@ namespace ATS.WEB.Data.Seeds {
 
         private void SeedUsers(UserManager<ApplicationUser> userManager) {
 
-            var user = new ApplicationUser {
-                Name = Roles.Admin.ToString(),
-                UserName = _appSettings.AdminEmail,
-                NormalizedUserName = _appSettings.AdminEmail.ToUpper(),
+            var user = new ApplicationUser{ 
+                Name = Role.Admin.ToString(),
                 Email = _appSettings.AdminEmail,
+                NormalizedUserName = _appSettings.AdminEmail.ToUpper(),
                 NormalizedEmail = _appSettings.AdminEmail.ToUpper(),
                 EmailConfirmed = true,
                 LockoutEnabled = false,
@@ -52,7 +51,7 @@ namespace ATS.WEB.Data.Seeds {
             if (admin == null)
                 userManager.CreateAsync(user, _appSettings.AdminPassword).Wait();
              
-            userManager.AddToRoleAsync(user, Roles.Admin.ToString()).Wait();
+            userManager.AddToRoleAsync(user, Role.Admin.ToString()).Wait();
         }
     }
 }

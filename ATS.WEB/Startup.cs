@@ -41,7 +41,7 @@ namespace ATS.WEB
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddAuthorization(options => {
-                options.AddPolicy(RequireRole.RequireAdminRole.ToString(), policy => policy.RequireRole(Roles.Admin.ToString()));
+                options.AddPolicy(RequireRole.RequireAdminRole.ToString(), policy => policy.RequireRole(Role.Admin.ToString()));
             });
             var builder = services.AddRazorPages(options => {
                 options.Conventions.AuthorizeAreaFolder("Admin", "/", RequireRole.RequireAdminRole.ToString());

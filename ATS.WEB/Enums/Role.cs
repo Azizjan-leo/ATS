@@ -1,5 +1,5 @@
 ﻿namespace ATS.WEB.Enums {
-    public enum Roles {
+    public enum Role {
         Admin,
         Teacher,
         Student

@@ -22,7 +22,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         @if (SignInManager.IsSignedIn(User)) {
-                            @if (User.IsInRole(Roles.Admin.ToString())) { 
+                            @if (User.IsInRole(Role.Admin.ToString())) { 
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Admin" asp-page="/Home/Index">Рабочий кабинет</a>
                         </li>

@@ -1,25 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using ATS.WEB.Data;
 using ATS.WEB.Data.Entities;
+using Microsoft.AspNetCore.Identity;
 
-namespace ATS.WEB.Areas.Admin.Pages.Users
-{
+namespace ATS.WEB.Areas.Admin.Pages.Users {
     public class DetailsModel : PageModel
     {
-        private readonly ATS.WEB.Data.ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public DetailsModel(ATS.WEB.Data.ApplicationDbContext context)
-        {
-            _context = context;
+        public DetailsModel(UserManager<ApplicationUser> userManager) {
+            _userManager = userManager;
         }
 
-        public ApplicationUser2 ApplicationUser2 { get; set; }
+        [BindProperty]
+        public DetailsViewModel Model { get; set; }
+
+        public class DetailsViewModel {
+            public ApplicationUser ApplicationUser { get; set; }
+            public string Role { get; set; }
+        }
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -28,12 +29,14 @@ namespace ATS.WEB.Areas.Admin.Pages.Users
                 return NotFound();
             }
 
-            ApplicationUser2 = await _context.Users2.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (ApplicationUser2 == null)
+            Model.ApplicationUser = await _userManager.FindByIdAsync(id);
+            if (Model.ApplicationUser == null)
             {
                 return NotFound();
             }
+            
+            Model.Role = (await _userManager.GetRolesAsync(Model.ApplicationUser)).FirstOrDefault();
+
             return Page();
         }
     }

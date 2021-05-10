@@ -1,26 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using ATS.WEB.Data;
 using ATS.WEB.Data.Entities;
+using Microsoft.AspNetCore.Identity;
 
-namespace ATS.WEB.Areas.Admin.Pages.Users
-{
+namespace ATS.WEB.Areas.Admin.Pages.Users {
     public class DeleteModel : PageModel
     {
-        private readonly ATS.WEB.Data.ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public DeleteModel(ATS.WEB.Data.ApplicationDbContext context)
-        {
-            _context = context;
+        public DeleteModel(UserManager<ApplicationUser> userManager) {
+            _userManager = userManager;
         }
 
         [BindProperty]
-        public ApplicationUser2 ApplicationUser2 { get; set; }
+        public DeleteViewModel Model { get; set; }
+     
+        public class DeleteViewModel {
+            public ApplicationUser ApplicationUser { get; set; }
+            public string Role { get; set; }
+        }
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -29,12 +29,13 @@ namespace ATS.WEB.Areas.Admin.Pages.Users
                 return NotFound();
             }
 
-            ApplicationUser2 = await _context.Users2.FirstOrDefaultAsync(m => m.Id == id);
+            Model.ApplicationUser = await _userManager.FindByIdAsync(id);
 
-            if (ApplicationUser2 == null)
+            if (Model.ApplicationUser == null)
             {
                 return NotFound();
             }
+            Model.Role = (await _userManager.GetRolesAsync(Model.ApplicationUser)).FirstOrDefault();
             return Page();
         }
 
@@ -45,12 +46,11 @@ namespace ATS.WEB.Areas.Admin.Pages.Users
                 return NotFound();
             }
 
-            ApplicationUser2 = await _context.Users2.FindAsync(id);
+            var user = await _userManager.FindByIdAsync(id);
 
-            if (ApplicationUser2 != null)
+            if (user != null)
             {
-                _context.Users2.Remove(ApplicationUser2);
-                await _context.SaveChangesAsync();
+                await _userManager.DeleteAsync(user);
             }
 
             return RedirectToPage("./Index");

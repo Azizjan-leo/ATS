@@ -8,36 +8,30 @@
 <h1>Details</h1>
 
 <div>
-    <h4>ApplicationUser2</h4>
+    <h4>ApplicationUser</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ApplicationUser2.Name)
+            @Html.DisplayNameFor(model => model.Model.ApplicationUser.Name)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ApplicationUser2.Name)
+            @Html.DisplayFor(model => model.Model.ApplicationUser.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ApplicationUser2.Role)
+            @Html.DisplayNameFor(model => model.Model.Role)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ApplicationUser2.Role)
+            @Html.DisplayFor(model => model.Model.Role)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ApplicationUser2.Email)
+            @Html.DisplayNameFor(model => model.Model.ApplicationUser.Email)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ApplicationUser2.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ApplicationUser2.Password)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ApplicationUser2.Password)
+            @Html.DisplayFor(model => model.Model.ApplicationUser.Email)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.ApplicationUser2.Id">Edit</a> |
+    <a asp-page="./Edit" asp-route-id="@Model.Model.ApplicationUser.Id">Edit</a> |
     <a asp-page="./Index">Back to List</a>
 </div>
