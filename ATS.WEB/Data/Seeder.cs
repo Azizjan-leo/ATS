@@ -36,21 +36,28 @@ namespace ATS.WEB.Data.Seeds {
 
         private void SeedUsers(UserManager<ApplicationUser> userManager) {
 
-            var user = new ApplicationUser{ 
+            var user = new ApplicationUser {
                 Name = Role.Admin.ToString(),
-                Email = _appSettings.AdminEmail,
+                UserName = _appSettings.AdminEmail,
                 NormalizedUserName = _appSettings.AdminEmail.ToUpper(),
+                Email = _appSettings.AdminEmail,
                 NormalizedEmail = _appSettings.AdminEmail.ToUpper(),
                 EmailConfirmed = true,
                 LockoutEnabled = false,
                 SecurityStamp = Guid.NewGuid().ToString()
             };
-            
+
             var admin = userManager.FindByEmailAsync(_appSettings.AdminEmail).Result;
 
-            if (admin == null)
+
+            if (admin == null) {
+                //var password = new PasswordHasher<ApplicationUser>();
+                //var hashed = password.HashPassword(user, _appSettings.AdminPassword);
+                //user.PasswordHash = hashed;
+
                 userManager.CreateAsync(user, _appSettings.AdminPassword).Wait();
-             
+            }
+
             userManager.AddToRoleAsync(user, Role.Admin.ToString()).Wait();
         }
     }
