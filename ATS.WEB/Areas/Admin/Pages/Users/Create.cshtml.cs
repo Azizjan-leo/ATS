@@ -22,7 +22,8 @@ namespace ATS.WEB.Areas.Admin.Pages.Users {
         public IActionResult OnGet()
         {
             Input = new InputModel {
-                RolesList = Enum.GetNames(typeof(Role)).Where(x => x != Role.Admin.ToString()).Select(x => new SelectListItem { Text = x, Value = x })
+                RolesList = Enum.GetNames(typeof(Role)).Where(x => x != Role.Admin.ToString())
+                                                            .Select(x => new SelectListItem { Text = x, Value = x })
             };
             return Page();
         }
@@ -44,7 +45,7 @@ namespace ATS.WEB.Areas.Admin.Pages.Users {
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            public string Role { get; set; }
+            public Role Role { get; set; }
             public IEnumerable<SelectListItem> RolesList { get; set; }
         }
 
