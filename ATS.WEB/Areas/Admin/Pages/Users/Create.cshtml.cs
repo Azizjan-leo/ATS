@@ -22,7 +22,7 @@ namespace ATS.WEB.Areas.Admin.Pages.Users {
         public IActionResult OnGet()
         {
             Input = new InputModel {
-                RolesList = Enum.GetNames(typeof(Role)).Select(x => new SelectListItem { Text = x, Value = x }).ToList()
+                RolesList = Enum.GetNames(typeof(Role)).Where(x => x != Role.Admin.ToString()).Select(x => new SelectListItem { Text = x, Value = x })
             };
             return Page();
         }
@@ -45,7 +45,7 @@ namespace ATS.WEB.Areas.Admin.Pages.Users {
             public string ConfirmPassword { get; set; }
 
             public string Role { get; set; }
-            public List<SelectListItem> RolesList { get; set; }
+            public IEnumerable<SelectListItem> RolesList { get; set; }
         }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD

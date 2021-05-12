@@ -1,11 +1,8 @@
 ﻿using ATS.WEB.Data.Entities;
 using ATS.WEB.Enums;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ATS.WEB.Data.Seeds {
     public class Seeder {
@@ -50,13 +47,8 @@ namespace ATS.WEB.Data.Seeds {
             var admin = userManager.FindByEmailAsync(_appSettings.AdminEmail).Result;
 
 
-            if (admin == null) {
-                //var password = new PasswordHasher<ApplicationUser>();
-                //var hashed = password.HashPassword(user, _appSettings.AdminPassword);
-                //user.PasswordHash = hashed;
-
+            if (admin == null) 
                 userManager.CreateAsync(user, _appSettings.AdminPassword).Wait();
-            }
 
             userManager.AddToRoleAsync(user, Role.Admin.ToString()).Wait();
         }
