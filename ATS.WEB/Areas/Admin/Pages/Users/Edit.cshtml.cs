@@ -10,6 +10,7 @@ using ATS.WEB.Data;
 using ATS.WEB.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using ATS.WEB.Enums;
 
 namespace ATS.WEB.Areas.Admin.Pages.Users
 {
@@ -36,7 +37,7 @@ namespace ATS.WEB.Areas.Admin.Pages.Users
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-            public string Role { get; set; }
+            public Role Role { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync(string id)
@@ -46,7 +47,7 @@ namespace ATS.WEB.Areas.Admin.Pages.Users
                 return NotFound();
             }
 
-            Model.ApplicationUser = await _userManager.FindByIdAsync(id);
+            Model = new EditViewModel { ApplicationUser = await _userManager.FindByIdAsync(id) };
 
             if (Model.ApplicationUser == null)
             {

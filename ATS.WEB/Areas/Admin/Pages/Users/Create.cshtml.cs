@@ -21,18 +21,28 @@ namespace ATS.WEB.Areas.Admin.Pages.Users {
 
         public IActionResult OnGet()
         {
-            Input = new InputModel {
-                RolesList = Enum.GetNames(typeof(Role)).Where(x => x != Role.Admin.ToString())
-                                                            .Select(x => new SelectListItem { Text = x, Value = x })
-            };
             return Page();
         }
 
         [BindProperty]
         public InputModel Input { get; set; }
-        public DayOfWeek DayOfWeek { get; set; }
+
+        public IEnumerable<SelectListItem> RolesList {
+            get {
+                return Enum.GetNames(typeof(Role)).Where(x => x != Role.Admin.ToString())
+                                .Select(x => new SelectListItem { Text = x, Value = x });
+            }
+        }
+
         public class InputModel {
-            public UserViewModel ApplicationUser { get; set; }
+            [Required]
+            [EmailAddress]
+            [Display(Name = "Email")]
+            public string Email { get; set; }
+
+            [Required]
+            [Display(Name = "Name")]
+            public string Name { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -45,8 +55,8 @@ namespace ATS.WEB.Areas.Admin.Pages.Users {
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
+            [Required]
             public Role Role { get; set; }
-            public IEnumerable<SelectListItem> RolesList { get; set; }
         }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
@@ -57,14 +67,14 @@ namespace ATS.WEB.Areas.Admin.Pages.Users {
                 return Page();
             }
             var user = new ApplicationUser {
-                Name = Input.ApplicationUser.Name,
-                Email = Input.ApplicationUser.Email,
-                UserName = Input.ApplicationUser.Email
+                Name = Input.Name,
+                Email = Input.Email,
+                UserName = Input.Email
             };
 
             var result = await _userManager.CreateAsync(user, Input.Password);
             if (result.Succeeded) {
-                await _userManager.AddToRoleAsync(user, Input.ApplicationUser.Role);
+                await _userManager.AddToRoleAsync(user, Input.Role.ToString());
             }
                 return RedirectToPage("./Index");
         }

@@ -22,14 +22,12 @@ namespace ATS.WEB.Areas.Admin.Pages.Users {
             public string Role { get; set; }
         }
 
-        public async Task<IActionResult> OnGetAsync(string id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> OnGetAsync(string id) {
+            if (id == null) {
                 return NotFound();
             }
 
-            Model.ApplicationUser = await _userManager.FindByIdAsync(id);
+            Model = new DeleteViewModel { ApplicationUser = await _userManager.FindByIdAsync(id) };
 
             if (Model.ApplicationUser == null)
             {

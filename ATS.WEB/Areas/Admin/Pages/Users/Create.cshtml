@@ -2,10 +2,10 @@
 @model ATS.WEB.Areas.Admin.Pages.Users.CreateModel
 
 @{
-    ViewData["Title"] = "Create User";
+    ViewData["Title"] = "Register User";
 }
 
-<h1>Create</h1>
+<h1>Register</h1>
 
 <h4>User</h4>
 <hr />
@@ -14,19 +14,21 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Input.ApplicationUser.Name" class="control-label"></label>
-                <input asp-for="Input.ApplicationUser.Name" class="form-control" />
-                <span asp-validation-for="Input.ApplicationUser.Name" class="text-danger"></span>
+                <label asp-for="Input.Name" class="control-label"></label>
+                <input asp-for="Input.Name" class="form-control" />
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.ApplicationUser.Role" class="control-label"></label>
-                <select asp-for="Input.Role" asp-items="Model.Input.RolesList" class="form-control">
+                <label asp-for="Input.Role" class="control-label"></label>
+                <select asp-for="Input.Role" asp-items="Model.RolesList" class="form-control">
+                    <option>Select one</option>
                 </select>
+                <span asp-validation-for="Input.Role" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.ApplicationUser.Email" class="control-label"></label>
-                <input asp-for="Input.ApplicationUser.Email" class="form-control" />
-                <span asp-validation-for="Input.ApplicationUser.Email" class="text-danger"></span>
+                <label asp-for="Input.Email" class="control-label"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.Password" class="control-label"></label>
@@ -34,7 +36,12 @@
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <label asp-for="Input.ConfirmPassword" class="control-label"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Register" class="btn btn-primary" />
             </div>
         </form>
     </div>
