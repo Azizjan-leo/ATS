@@ -20,9 +20,9 @@ namespace ATS.WEB.Data
             base.OnModelCreating(builder);
 
             builder.Entity<IdentityRole>().HasData(
-              new IdentityRole(Enums.Roles.Admin.ToString()),
-              new IdentityRole(Enums.Roles.Teacher.ToString()),
-              new IdentityRole(Enums.Roles.Student.ToString())
+              new IdentityRole(Enums.Role.Admin.ToString()),
+              new IdentityRole(Enums.Role.Teacher.ToString()),
+              new IdentityRole(Enums.Role.Student.ToString())
               );
         }
 

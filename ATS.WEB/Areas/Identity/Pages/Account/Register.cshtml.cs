@@ -53,7 +53,6 @@ namespace ATS.WEB.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            [EmailAddress]
             [Display(Name = "Name")]
             public string Name { get; set; }
 
@@ -81,11 +80,14 @@ namespace ATS.WEB.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, Name = "Azizjan" };
+                var user = new ApplicationUser {
+                    Email = Input.Email,
+                    UserName = Input.Email,
+                    Name = Input.Name
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, Roles.Admin.ToString());
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

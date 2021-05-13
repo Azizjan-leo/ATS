@@ -1,7 +1,11 @@
 ﻿namespace ATS.WEB.Enums {
-    public enum Roles {
+    public enum Role {
         Admin,
         Teacher,
         Student
+    }
+
+    public enum RequireRole {
+        RequireAdminRole
     }
 }
