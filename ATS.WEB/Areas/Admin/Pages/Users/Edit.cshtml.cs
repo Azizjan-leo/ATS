@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ATS.WEB.Data;
 using ATS.WEB.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
@@ -27,8 +25,7 @@ namespace ATS.WEB.Areas.Admin.Pages.Users
 
         public IEnumerable<SelectListItem> RolesList {
             get {
-                return Enum.GetNames(typeof(Role)).Where(x => x != Role.Admin.ToString())
-                                .Select(x => new SelectListItem { Text = x, Value = x });
+                return Enum.GetNames(typeof(Role)).Where(x => x != Role.Admin.ToString()).Select(x => new SelectListItem { Text = x, Value = x });
             }
         }
 
@@ -70,7 +67,7 @@ namespace ATS.WEB.Areas.Admin.Pages.Users
                 return NotFound();
             }
 
-            Model = new EditViewModel { Email = user.Email, Name = user.Name };
+            Model = new EditViewModel { Id = user.Id, Email = user.Email, Name = user.Name };
             var roleStr = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
             Model.Role = (Role)Enum.Parse(typeof(Role), roleStr);
 
@@ -90,7 +87,7 @@ namespace ATS.WEB.Areas.Admin.Pages.Users
             if(user is null) {
                 return NotFound();
             }
-
+            
             try
             {
                 user.Name = Model.Name;

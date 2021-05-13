@@ -18,7 +18,9 @@ namespace ATS.WEB.Areas.Admin.Pages.Users {
         public DetailsViewModel Model { get; set; }
 
         public class DetailsViewModel {
-            public ApplicationUser ApplicationUser { get; set; }
+            public string Id { get; set; }
+            public string Name { get; set; }
+            public string Email { get; set; }
             public string Role { get; set; }
         }
 
@@ -29,13 +31,14 @@ namespace ATS.WEB.Areas.Admin.Pages.Users {
                 return NotFound();
             }
 
-            Model.ApplicationUser = await _userManager.FindByIdAsync(id);
-            if (Model.ApplicationUser == null)
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
-            
-            Model.Role = (await _userManager.GetRolesAsync(Model.ApplicationUser)).FirstOrDefault();
+            Model = new DetailsViewModel { Id = user.Id, Name = user.Name, Email = user.Email };
+
+            Model.Role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
 
             return Page();
         }

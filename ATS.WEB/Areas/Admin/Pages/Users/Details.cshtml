@@ -12,10 +12,10 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Model.ApplicationUser.Name)
+            @Html.DisplayNameFor(model => model.Model.Name)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Model.ApplicationUser.Name)
+            @Html.DisplayFor(model => model.Model.Name)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Model.Role)
@@ -24,14 +24,14 @@
             @Html.DisplayFor(model => model.Model.Role)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Model.ApplicationUser.Email)
+            @Html.DisplayNameFor(model => model.Model.Email)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Model.ApplicationUser.Email)
+            @Html.DisplayFor(model => model.Model.Email)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Model.ApplicationUser.Id">Edit</a> |
+    <a asp-page="./Edit" asp-route-id="@Model.Model.Id">Edit</a> |
     <a asp-page="./Index">Back to List</a>
 </div>
