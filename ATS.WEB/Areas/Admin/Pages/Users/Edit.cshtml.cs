@@ -25,8 +25,24 @@ namespace ATS.WEB.Areas.Admin.Pages.Users
         [BindProperty]
         public EditViewModel Model { get; set; }
 
+        public IEnumerable<SelectListItem> RolesList {
+            get {
+                return Enum.GetNames(typeof(Role)).Where(x => x != Role.Admin.ToString())
+                                .Select(x => new SelectListItem { Text = x, Value = x });
+            }
+        }
+
         public class EditViewModel {
-            public ApplicationUser ApplicationUser { get; set; }
+            public string Id { get; set; }
+
+            [Required]
+            [EmailAddress]
+            [Display(Name = "Email")]
+            public string Email { get; set; }
+
+            [Required]
+            [Display(Name = "Name")]
+            public string Name { get; set; }
 
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
@@ -37,6 +53,7 @@ namespace ATS.WEB.Areas.Admin.Pages.Users
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
             public Role Role { get; set; }
         }
 
@@ -47,14 +64,15 @@ namespace ATS.WEB.Areas.Admin.Pages.Users
                 return NotFound();
             }
 
-            Model = new EditViewModel { ApplicationUser = await _userManager.FindByIdAsync(id) };
-
-            if (Model.ApplicationUser == null)
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            Model.Role = (await _userManager.GetRolesAsync(Model.ApplicationUser)).FirstOrDefault();
+            Model = new EditViewModel { Email = user.Email, Name = user.Name };
+            var roleStr = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+            Model.Role = (Role)Enum.Parse(typeof(Role), roleStr);
 
             return Page();
         }
@@ -68,14 +86,14 @@ namespace ATS.WEB.Areas.Admin.Pages.Users
                 return Page();
             }
 
-            var user = await _userManager.FindByIdAsync(Model.ApplicationUser.Id);
+            var user = await _userManager.FindByIdAsync(Model.Id);
             if(user is null) {
                 return NotFound();
             }
 
             try
             {
-                user.Name = Model.ApplicationUser.Name;
+                user.Name = Model.Name;
              
                 if(!String.IsNullOrWhiteSpace(Model.Password)) {
                     var token = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -83,8 +101,8 @@ namespace ATS.WEB.Areas.Admin.Pages.Users
                 }
                 var roles = await _userManager.GetRolesAsync(user);
                 await _userManager.RemoveFromRolesAsync(user, roles.ToArray());
-                await _userManager.AddToRoleAsync(user, Model.Role);
-                await _userManager.SetEmailAsync(user, Model.ApplicationUser.Email);
+                await _userManager.AddToRoleAsync(user, Model.Role.ToString());
+                await _userManager.SetEmailAsync(user, Model.Email);
                 await _userManager.UpdateAsync(user);
             }
             catch (Exception)

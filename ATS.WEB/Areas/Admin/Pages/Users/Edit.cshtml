@@ -13,26 +13,32 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Model.ApplicationUser.Id" />
+            <input type="hidden" asp-for="Model.Id" />
             <div class="form-group">
-                <label asp-for="Model.ApplicationUser.Name" class="control-label"></label>
-                <input asp-for="Model.ApplicationUser.Name" class="form-control" />
-                <span asp-validation-for="Model.ApplicationUser.Name" class="text-danger"></span>
+                <label asp-for="Model.Name" class="control-label"></label>
+                <input asp-for="Model.Name" class="form-control" />
+                <span asp-validation-for="Model.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Model.Role" class="control-label"></label>
-                <input asp-for="Model.Role" class="form-control" />
+                <select asp-for="Model.Role" asp-items="Model.RolesList" class="form-control">
+                </select>
                 <span asp-validation-for="Model.Role" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Model.ApplicationUser.Email" class="control-label"></label>
-                <input asp-for="Model.ApplicationUser.Email" class="form-control" />
-                <span asp-validation-for="Model.ApplicationUser.Email" class="text-danger"></span>
+                <label asp-for="Model.Email" class="control-label"></label>
+                <input asp-for="Model.Email" class="form-control" />
+                <span asp-validation-for="Model.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Model.Password" class="control-label"></label>
                 <input asp-for="Model.Password" class="form-control" />
                 <span asp-validation-for="Model.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Model.ConfirmPassword" class="control-label"></label>
+                <input asp-for="Model.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Model.ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
