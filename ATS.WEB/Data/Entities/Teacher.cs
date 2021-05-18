@@ -1,5 +1,5 @@
 ﻿namespace ATS.WEB.Data.Entities {
-    public class Teacher {
+    public class Teachers {
         public int Id { get; set; }
         public virtual Cathedra Cathedra { get; set; }
     }

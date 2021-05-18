@@ -13,7 +13,7 @@ namespace ATS.WEB.Data
 
         public DbSet<Group> Groups { get; set; }
         public DbSet<Cathedra> Cathedras { get; set; }
-        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Teachers> Teachers { get; set; }
         public DbSet<Student> Students { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder) {

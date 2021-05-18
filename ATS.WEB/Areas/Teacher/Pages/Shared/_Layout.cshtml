@@ -1,5 +1,4 @@
-﻿@using WEB.Data.Entities;
-@using WEB.Enums;
+﻿@using ATS.WEB.Data.Entities;
 @inject SignInManager<ApplicationUser> SignInManager
 <!DOCTYPE html>
 <html lang="en">
@@ -21,21 +20,12 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            @if (User.IsInRole(Role.Admin.ToString()))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="Admin" asp-page="/Home/Index">Рабочий кабинет</a>
-                                </li>
-                            }
-                            else if (User.IsInRole(Role.Teacher.ToString()))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="Teacher" asp-page="/Home/Index">Рабочий кабинет</a>
-                                </li>
-                            }
-                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Teacher" asp-page="/Users/Index">Уроки</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Teacher" asp-page="/Cathedras/Index">Тесты</a>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
