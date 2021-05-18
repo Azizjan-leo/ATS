@@ -12,9 +12,9 @@ namespace ATS.WEB.Areas.Admin.Pages
 {
     public class DetailsModel : PageModel
     {
-        private readonly ATS.WEB.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DetailsModel(ATS.WEB.Data.ApplicationDbContext context)
+        public DetailsModel(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -28,7 +28,7 @@ namespace ATS.WEB.Areas.Admin.Pages
                 return NotFound();
             }
 
-            Cathedra = await _context.Cathedras.FirstOrDefaultAsync(m => m.Id == id);
+            Cathedra = await _context.Cathedras.Where(c => c.Id == id).Include(x => x.Groups).FirstOrDefaultAsync();
 
             if (Cathedra == null)
             {

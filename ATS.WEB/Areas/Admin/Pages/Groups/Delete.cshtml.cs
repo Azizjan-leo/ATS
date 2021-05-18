@@ -29,7 +29,7 @@ namespace ATS.WEB.Areas.Admin.Pages.Groups
                 return NotFound();
             }
 
-            Group = await _context.Groups.FirstOrDefaultAsync(m => m.Id == id);
+            Group = await _context.Groups.Where(m => m.Id == id).Include(x => x.Students).FirstOrDefaultAsync();
 
             if (Group == null)
             {

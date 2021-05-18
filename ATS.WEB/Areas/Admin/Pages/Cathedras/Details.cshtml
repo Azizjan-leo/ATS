@@ -18,6 +18,9 @@
             @Html.DisplayFor(model => model.Cathedra.Name)
         </dd>
     </dl>
+    <div>
+        <partial name="_GroupsPartial" model="Model.Cathedra.Groups" />
+    </div>
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Cathedra.Id">Edit</a> |
