@@ -1,24 +1,27 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ATS.WEB.Data;
 using ATS.WEB.Data.Entities;
 
-namespace ATS.WEB.Areas.Admin.Pages
+namespace ATS.WEB.Areas.Admin.Pages.Groups
 {
     public class EditModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ATS.WEB.Data.ApplicationDbContext _context;
 
-        public EditModel(ApplicationDbContext context)
+        public EditModel(ATS.WEB.Data.ApplicationDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public Cathedra Cathedra { get; set; }
+        public Group Group { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -27,9 +30,10 @@ namespace ATS.WEB.Areas.Admin.Pages
                 return NotFound();
             }
 
-            Cathedra = await _context.Cathedras.Where(m => m.Id == id).Include(x => x.Groups).FirstOrDefaultAsync();
+            Group = await _context.Groups.Where(m => m.Id == id).Include(x => x.Students).FirstOrDefaultAsync();
 
-            if (Cathedra == null)
+
+            if (Group == null)
             {
                 return NotFound();
             }
@@ -45,7 +49,7 @@ namespace ATS.WEB.Areas.Admin.Pages
                 return Page();
             }
 
-            _context.Attach(Cathedra).State = EntityState.Modified;
+            _context.Attach(Group).State = EntityState.Modified;
 
             try
             {
@@ -53,7 +57,7 @@ namespace ATS.WEB.Areas.Admin.Pages
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CathedraExists(Cathedra.Id))
+                if (!GroupExists(Group.Id))
                 {
                     return NotFound();
                 }
@@ -66,9 +70,9 @@ namespace ATS.WEB.Areas.Admin.Pages
             return RedirectToPage("./Index");
         }
 
-        private bool CathedraExists(int id)
+        private bool GroupExists(int id)
         {
-            return _context.Cathedras.Any(e => e.Id == id);
+            return _context.Groups.Any(e => e.Id == id);
         }
     }
 }

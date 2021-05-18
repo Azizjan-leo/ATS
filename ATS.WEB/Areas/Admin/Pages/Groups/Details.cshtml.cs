@@ -8,18 +8,18 @@ using Microsoft.EntityFrameworkCore;
 using ATS.WEB.Data;
 using ATS.WEB.Data.Entities;
 
-namespace ATS.WEB.Areas.Admin.Pages
+namespace ATS.WEB.Areas.Admin.Pages.Groups
 {
     public class DetailsModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ATS.WEB.Data.ApplicationDbContext _context;
 
-        public DetailsModel(ApplicationDbContext context)
+        public DetailsModel(ATS.WEB.Data.ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public Cathedra Cathedra { get; set; }
+        public Group Group { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,9 +28,9 @@ namespace ATS.WEB.Areas.Admin.Pages
                 return NotFound();
             }
 
-            Cathedra = await _context.Cathedras.Where(c => c.Id == id).Include(x => x.Groups).FirstOrDefaultAsync();
+            Group = await _context.Groups.Where(m => m.Id == id).Include(x => x.Students).FirstOrDefaultAsync();
 
-            if (Cathedra == null)
+            if (Group == null)
             {
                 return NotFound();
             }
