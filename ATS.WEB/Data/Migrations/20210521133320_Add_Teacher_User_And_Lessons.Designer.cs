@@ -4,14 +4,16 @@ using ATS.WEB.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ATS.WEB.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210521133320_Add_Teacher_User_And_Lessons")]
+    partial class Add_Teacher_User_And_Lessons
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -207,16 +209,11 @@ namespace ATS.WEB.Migrations
                     b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CathedraId");
 
                     b.HasIndex("GroupId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Students");
                 });
@@ -272,20 +269,20 @@ namespace ATS.WEB.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "71fdf007-65ea-4bb1-8dbb-26e12791e038",
-                            ConcurrencyStamp = "09a2eaaf-21e2-4848-80ee-2e581a45775b",
+                            Id = "eda9194f-d96d-47f7-845f-f0c5a8af16f6",
+                            ConcurrencyStamp = "99220123-a4b8-4b87-97a8-7210a7c70fe5",
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = "b92f7647-2152-429b-a69d-22355dfe7508",
-                            ConcurrencyStamp = "f535efaa-e08c-4819-9abf-32ce8e7c05d5",
+                            Id = "25bbc935-5568-4d3f-9007-81a5ee181c46",
+                            ConcurrencyStamp = "02317f43-9b9a-48ce-9e34-463cfefb756f",
                             Name = "Teacher"
                         },
                         new
                         {
-                            Id = "3e2bf2cd-2a9f-4d5f-be77-cbda864d861c",
-                            ConcurrencyStamp = "90a2b133-5ca7-484f-a980-82f8689ff715",
+                            Id = "0afe0911-efd2-41ab-b9a8-8802cac0da7d",
+                            ConcurrencyStamp = "490ec259-be28-46eb-9e40-ba4837784ccd",
                             Name = "Student"
                         });
                 });
@@ -444,15 +441,9 @@ namespace ATS.WEB.Migrations
                         .WithMany("Students")
                         .HasForeignKey("GroupId");
 
-                    b.HasOne("ATS.WEB.Data.Entities.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Cathedra");
 
                     b.Navigation("Group");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ATS.WEB.Data.Entities.Teacher", b =>

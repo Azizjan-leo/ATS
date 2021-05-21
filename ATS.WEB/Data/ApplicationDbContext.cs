@@ -15,7 +15,10 @@ namespace ATS.WEB.Data
         public DbSet<Cathedra> Cathedras { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Student> Students { get; set; }
-
+        public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
 
