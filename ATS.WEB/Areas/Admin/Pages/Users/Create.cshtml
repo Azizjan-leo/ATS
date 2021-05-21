@@ -14,6 +14,13 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="Input.CathedraId" class="control-label"></label>
+                <select asp-for="Input.CathedraId" asp-items="Model.Cathedras" class="form-control">
+                    <option>Select one</option>
+                </select>
+                <span asp-validation-for="Input.CathedraId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Input.Name" class="control-label"></label>
                 <input asp-for="Input.Name" class="form-control" />
                 <span asp-validation-for="Input.Name" class="text-danger"></span>

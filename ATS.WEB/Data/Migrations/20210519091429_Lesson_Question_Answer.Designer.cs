@@ -4,14 +4,16 @@ using ATS.WEB.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ATS.WEB.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210519091429_Lesson_Question_Answer")]
+    partial class Lesson_Question_Answer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -207,16 +209,11 @@ namespace ATS.WEB.Migrations
                     b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CathedraId");
 
                     b.HasIndex("GroupId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Students");
                 });
@@ -231,14 +228,9 @@ namespace ATS.WEB.Migrations
                     b.Property<int?>("CathedraId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CathedraId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Teachers");
                 });
@@ -272,20 +264,20 @@ namespace ATS.WEB.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "71fdf007-65ea-4bb1-8dbb-26e12791e038",
-                            ConcurrencyStamp = "09a2eaaf-21e2-4848-80ee-2e581a45775b",
+                            Id = "c67a306f-479a-4957-93e6-7e596dbb75cb",
+                            ConcurrencyStamp = "5904da3b-2538-4072-af66-703da54f60d0",
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = "b92f7647-2152-429b-a69d-22355dfe7508",
-                            ConcurrencyStamp = "f535efaa-e08c-4819-9abf-32ce8e7c05d5",
+                            Id = "2e4fe5a3-1d8c-4896-9692-b03fe634d9d2",
+                            ConcurrencyStamp = "82c2aa71-b4c8-4ba9-86a5-db46d99de9c9",
                             Name = "Teacher"
                         },
                         new
                         {
-                            Id = "3e2bf2cd-2a9f-4d5f-be77-cbda864d861c",
-                            ConcurrencyStamp = "90a2b133-5ca7-484f-a980-82f8689ff715",
+                            Id = "9b85438b-7112-44c7-88ee-c750b6760d90",
+                            ConcurrencyStamp = "00154951-d5e3-449f-8f1b-32778213a279",
                             Name = "Student"
                         });
                 });
@@ -419,7 +411,7 @@ namespace ATS.WEB.Migrations
             modelBuilder.Entity("ATS.WEB.Data.Entities.Lesson", b =>
                 {
                     b.HasOne("ATS.WEB.Data.Entities.Teacher", "Teacher")
-                        .WithMany("Lessons")
+                        .WithMany()
                         .HasForeignKey("TeacherId");
 
                     b.Navigation("Teacher");
@@ -444,15 +436,9 @@ namespace ATS.WEB.Migrations
                         .WithMany("Students")
                         .HasForeignKey("GroupId");
 
-                    b.HasOne("ATS.WEB.Data.Entities.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Cathedra");
 
                     b.Navigation("Group");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ATS.WEB.Data.Entities.Teacher", b =>
@@ -461,13 +447,7 @@ namespace ATS.WEB.Migrations
                         .WithMany()
                         .HasForeignKey("CathedraId");
 
-                    b.HasOne("ATS.WEB.Data.Entities.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Cathedra");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -539,11 +519,6 @@ namespace ATS.WEB.Migrations
             modelBuilder.Entity("ATS.WEB.Data.Entities.Question", b =>
                 {
                     b.Navigation("Answers");
-                });
-
-            modelBuilder.Entity("ATS.WEB.Data.Entities.Teacher", b =>
-                {
-                    b.Navigation("Lessons");
                 });
 #pragma warning restore 612, 618
         }

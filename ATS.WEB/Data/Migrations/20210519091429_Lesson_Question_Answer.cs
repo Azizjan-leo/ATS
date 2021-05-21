@@ -2,7 +2,7 @@
 
 namespace ATS.WEB.Migrations
 {
-    public partial class Leson_Queston_Answer : Migration
+    public partial class Lesson_Question_Answer : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace ATS.WEB.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TeacherId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    TeacherId = table.Column<int>(type: "int", nullable: true),
                     Topic = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -20,9 +20,9 @@ namespace ATS.WEB.Migrations
                 {
                     table.PrimaryKey("PK_Lessons", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Lessons_AspNetUsers_TeacherId",
+                        name: "FK_Lessons_Teachers_TeacherId",
                         column: x => x.TeacherId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "Teachers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -69,6 +69,7 @@ namespace ATS.WEB.Migrations
                 });
 
            
+
             migrationBuilder.CreateIndex(
                 name: "IX_Answers_QuestionId",
                 table: "Answers",
@@ -95,6 +96,21 @@ namespace ATS.WEB.Migrations
 
             migrationBuilder.DropTable(
                 name: "Lessons");
+
+            migrationBuilder.DeleteData(
+                table: "AspNetRoles",
+                keyColumn: "Id",
+                keyValue: "2e4fe5a3-1d8c-4896-9692-b03fe634d9d2");
+
+            migrationBuilder.DeleteData(
+                table: "AspNetRoles",
+                keyColumn: "Id",
+                keyValue: "9b85438b-7112-44c7-88ee-c750b6760d90");
+
+            migrationBuilder.DeleteData(
+                table: "AspNetRoles",
+                keyColumn: "Id",
+                keyValue: "c67a306f-479a-4957-93e6-7e596dbb75cb");
         }
     }
 }
