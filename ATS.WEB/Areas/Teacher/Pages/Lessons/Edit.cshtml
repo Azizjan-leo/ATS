@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Edit";
+    ViewBag.LessonId = Model.Lesson.Id;
 }
 
 <h1>Edit</h1>
@@ -30,9 +31,14 @@
         </form>
     </div>
 </div>
-
 <div>
     <a asp-page="./Index">Back to List</a>
+</div>
+
+<div>
+    <div>
+        <partial name="_QuestionsPartial" model="Model.Lesson.Questions" />
+    </div>
 </div>
 
 @section Scripts {

@@ -1,0 +1,31 @@
+﻿@page
+@model ATS.WEB.Areas.Teacher.Pages.Questions.EditModel
+
+<h4>Input</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Input.LessonId" />
+            <input type="hidden" asp-for="Input.QuestionId" />
+            <input type="hidden" asp-for="Input.BackUrl" />
+            <div class="form-group">
+                <label asp-for="Input.QuestionText" class="control-label"></label>
+                <input asp-for="Input.QuestionText" class="form-control" />
+                <span asp-validation-for="Input.QuestionText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="/Lessons/@Model.Input.BackUrl" asp-route-id="@Model.Input.LessonId">Back to Lesson</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

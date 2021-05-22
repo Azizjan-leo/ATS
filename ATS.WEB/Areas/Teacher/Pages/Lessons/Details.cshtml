@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Details";
+    ViewBag.LessonId = Model.Lesson.Id;
 }
 
 <h1>Details</h1>
@@ -28,4 +29,9 @@
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Lesson.Id">Edit</a> |
     <a asp-page="./Index">Back to List</a>
+</div>
+<div>
+    <div>
+        <partial name="_QuestionsPartial" model="Model.Lesson.Questions" />
+    </div>
 </div>
