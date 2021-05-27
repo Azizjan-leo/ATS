@@ -12,6 +12,10 @@
 </div>
 <hr />
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Lesson.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    @if (User.IsInRole(Role.Teacher.ToString()))
+    {
+        <a asp-page="./Edit" asp-route-id="@Model.Lesson.Id">Edit</a>
+    }
+    <a href="#" onclick="history.back(-1);">Back to List</a>
+
 </div>
