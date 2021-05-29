@@ -23,8 +23,8 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Topic)
-                    </td>
+                        <a class="nav-link text-dark" asp-area="Teacher" asp-page="/Lessons/Details" asp-route-id="@item.Id"> @Html.DisplayFor(modelItem => item.Topic)</a>
+</td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Teacher.User.Name)
                     </td>
