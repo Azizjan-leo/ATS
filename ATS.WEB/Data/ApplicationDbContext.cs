@@ -18,6 +18,7 @@ namespace ATS.WEB.Data
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
+        public DbSet<Material> Materials { get; set; }
         
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);

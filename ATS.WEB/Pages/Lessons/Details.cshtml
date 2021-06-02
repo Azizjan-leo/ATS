@@ -1,0 +1,21 @@
+﻿@page
+@model ATS.WEB.Pages.Lessons.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>@Html.DisplayFor(model => model.Lesson.Topic)</h1>
+<hr />
+<div>
+    <span style="white-space: pre-line">@Html.DisplayFor(m => m.Lesson.Content)</span>
+</div>
+<hr />
+<div>
+    <a href="#" onclick="history.back(-1);">Back to List</a>
+</div>
+@*<div>
+    <div>
+        <partial name="_QuestionsPartial" model="Model.Lesson.Questions" />
+    </div>
+</div>*@
