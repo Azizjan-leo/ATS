@@ -1,0 +1,33 @@
+﻿@page
+@model ATS.WEB.Pages.Lessons.IndexModel
+
+@{
+    ViewData["Title"] = "Laboratory works";
+}
+
+<h1>Laboratory works</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Topic
+            </th>
+            <th>
+                Author
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Lessons) {
+        <tr>
+            <td>
+                <a asp-page="./Details" asp-route-id="@item.Id"> @Html.DisplayFor(modelItem => item.Topic)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Teacher.User.Name)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -21,6 +21,12 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-page="/Lessons/Index">Лабороторные работы</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-page="/Lessons/Edit">Учебные материалы</a>
+                        </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
                             @if (User.IsInRole(Role.Admin.ToString()))
