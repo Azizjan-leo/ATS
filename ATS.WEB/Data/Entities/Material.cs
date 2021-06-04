@@ -8,5 +8,6 @@ namespace ATS.WEB.Data.Entities
         public Teacher Teacher { get; set; }
         public DateTime UploadDate { get; set; }
         public string FileName { get; set; }
+        public string Name { get; set; }
     }
 }
