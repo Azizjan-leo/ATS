@@ -5,13 +5,13 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Automated Training System</h1>
-    <p>Developed by Aydana</p>
+    <h2 class="display-4">Автоматизированная обучающая система по дисциплине "Ассемблер"</h2>
+    <br />
     <table class="table">
         <thead>
             <tr>
                 <th>
-                  <h3>Lessons</h3>
+                  <h3>Lesson</h3>
                 </th>
                 <th>
                     <h3>Author</h3>
@@ -23,7 +23,7 @@
             {
                 <tr>
                     <td>
-                        <a class="nav-link text-dark" asp-page="/Lessons/Details" asp-route-id="@item.Id"> @Html.DisplayFor(modelItem => item.Topic)</a>
+                        <a class="nav-link text-dark"  asp-page="/Lessons/Details" asp-route-id="@item.Id"> @Html.DisplayFor(modelItem => item.Topic)</a>
 </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Teacher.User.Name)

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using ATS.WEB.Data;
 using ATS.WEB.Data.Entities;
 
-namespace ATS.WEB.Areas.Teacher.Pages.Materials
+namespace ATS.WEB.Pages.Materials
 {
     public class IndexModel : PageModel
     {

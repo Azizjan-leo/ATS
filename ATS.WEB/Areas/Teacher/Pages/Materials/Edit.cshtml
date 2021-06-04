@@ -11,19 +11,22 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Material.Id" />
+            <input type="hidden" asp-for="Material.UploadDate" />
+            <input type="hidden" asp-for="Material.FileName" />
             <div class="form-group">
-                <label asp-for="Material.UploadDate" class="control-label"></label>
-                <input asp-for="Material.UploadDate" class="form-control" />
-                <span asp-validation-for="Material.UploadDate" class="text-danger"></span>
+                <label asp-for="Material.Name" class="control-label"></label>
+                <input asp-for="Material.Name" class="form-control" />
+                <span asp-validation-for="Material.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Material.FileName" class="control-label"></label>
-                <input asp-for="Material.FileName" class="form-control" />
-                <span asp-validation-for="Material.FileName" class="text-danger"></span>
+                <label asp-for="Upload" class="control-label"></label>
+                <input type="file" asp-for="Upload" class="form-control" />
+                <span asp-validation-for="Upload" class="text-danger"></span>
             </div>
+ 
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

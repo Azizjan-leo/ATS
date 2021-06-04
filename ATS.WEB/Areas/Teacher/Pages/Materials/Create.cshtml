@@ -9,21 +9,26 @@
 
 <h4>Material</h4>
 <hr />
-@*<div class="row">
+<div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Material.FileName" class="control-label"></label>
-                <input asp-for="Material.FileName" class="form-control" />
-                <span asp-validation-for="Material.FileName" class="text-danger"></span>
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Upload" class="control-label"></label>
+                <input type="file" asp-for="Upload" class="form-control" />
+                <span asp-validation-for="Upload" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
-        </form>
-    </div>*@
-<!--</div>-->
+        </form>    
+    </div>
+</div>
 
 <div>
     <a asp-page="Index">Back to List</a>
