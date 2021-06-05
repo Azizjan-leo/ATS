@@ -25,7 +25,7 @@
                             <a class="nav-link text-dark" asp-page="/Lessons/Index">Лабороторные работы</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Materials/Index">Учебные материалы</a>
+                            <a class="nav-link text-dark"  asp-page="/Materials/Index">Учебные материалы</a>
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
@@ -39,12 +39,6 @@
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="Teacher" asp-page="/Home/Index">Рабочий кабинет</a>
-                                </li>
-                            }
-                            else if (User.IsInRole(Role.Student.ToString()))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-page="/Feedback/Index">Обратная связь</a>
                                 </li>
                             }
                         }
