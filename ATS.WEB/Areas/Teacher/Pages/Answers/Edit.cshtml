@@ -14,10 +14,16 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Answer.Id" />
+            <input type="hidden" asp-for="QuestionId" />
             <div class="form-group">
                 <label asp-for="Answer.AnswerText" class="control-label"></label>
                 <input asp-for="Answer.AnswerText" class="form-control" />
                 <span asp-validation-for="Answer.AnswerText" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Answer.IsRight" class="control-label"></label>
+                <input asp-for="Answer.IsRight">
+                <input name="IsRight" type="hidden" value="false">
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -27,7 +33,7 @@
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="/Questions/Edit" asp-route-id="@Model.QuestionId">Back to the quesiton</a>
 </div>
 
 @section Scripts {

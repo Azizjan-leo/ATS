@@ -24,7 +24,8 @@
                 @item.IsRight
             </td>
             <td>
-                <a asp-page="/Answer/Delete" asp-route-id="@item.Id" asp-route-lessonId="@ViewBag.QuestionId" asp-route-backUrl="@ViewData["Title"]">Delete</a>
+                <a asp-page="/Answers/Edit" asp-route-id="@item.Id" asp-route-questionId="@ViewBag.QuestionId">Edit</a> |
+                <a asp-page="/Answers/Delete" asp-route-id="@item.Id" asp-route-questionId="@ViewBag.QuestionId">Delete</a>
             </td>
         </tr>
 }
@@ -32,6 +33,6 @@
 </table>
 <div>
     <p>
-        <a asp-page="/Answers/Create" asp-route-id="@ViewBag.QuestionId" asp-route-backUrl="@ViewData["Title"]">Add new answer</a>
+        <a asp-page="/Answers/Create" asp-route-id="@ViewBag.QuestionId">Add new answer</a>
     </p>
 </div>

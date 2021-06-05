@@ -12,48 +12,52 @@ namespace ATS.WEB.Areas.Teacher.Pages.Answers
 {
     public class DeleteModel : PageModel
     {
-        private readonly ATS.WEB.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DeleteModel(ATS.WEB.Data.ApplicationDbContext context)
+        public DeleteModel(ApplicationDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public Answer Answer { get; set; }
+        public InputModel Input { get; set; } = new InputModel();
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public class InputModel {
+            public int QuestionId { get; set; }
+            public int AnswerId { get; set; }
+            public string AnswerText { get; set; }
+            public bool IsRight {get; set; }
+        }
+
+        public async Task<IActionResult> OnGetAsync(int id, int questionId)
         {
-            if (id == null)
+
+            var answer = await _context.Answers.FirstOrDefaultAsync(m => m.Id == id);
+
+            if (answer is null)
             {
                 return NotFound();
             }
 
-            Answer = await _context.Answers.FirstOrDefaultAsync(m => m.Id == id);
+            Input.AnswerId = answer.Id;
+            Input.AnswerText = answer.AnswerText;
+            Input.IsRight = answer.IsRight;
+            Input.QuestionId = questionId;
 
-            if (Answer == null)
-            {
-                return NotFound();
-            }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var answer = await _context.Answers.FindAsync(Input.AnswerId);
 
-            Answer = await _context.Answers.FindAsync(id);
-
-            if (Answer != null)
+            if (answer != null)
             {
-                _context.Answers.Remove(Answer);
+                _context.Answers.Remove(answer);
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage($"/Questions/Edit", new { id = Input.QuestionId });
         }
     }
 }
