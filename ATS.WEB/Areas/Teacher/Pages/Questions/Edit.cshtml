@@ -1,5 +1,9 @@
 ﻿@page
 @model ATS.WEB.Areas.Teacher.Pages.Questions.EditModel
+@{
+    ViewData["Title"] = "Edit";
+    ViewBag.QuestionId = Model.Input.QuestionId;
+}
 
 <h4>Input</h4>
 <hr />
@@ -26,6 +30,9 @@
     <a asp-page="/Lessons/@Model.Input.BackUrl" asp-route-id="@Model.Input.LessonId">Back to Lesson</a>
 </div>
 
+<div>
+    <partial name="_AnswersPartial" model="Model.Answers" />
+</div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

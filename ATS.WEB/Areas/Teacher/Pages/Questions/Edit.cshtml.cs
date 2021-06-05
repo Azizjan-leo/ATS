@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ATS.WEB.Data;
 using ATS.WEB.Data.Entities;
+using System.Collections.Generic;
 
 namespace ATS.WEB.Areas.Teacher.Pages.Questions
 {
@@ -16,8 +17,11 @@ namespace ATS.WEB.Areas.Teacher.Pages.Questions
         {
             _context = context;
         }
+
         [BindProperty]
         public InputModel Input { get; set; } = new InputModel();
+        [BindProperty]
+        public List<Answer> Answers { get; set; }
 
         public class InputModel {
             public int LessonId { get; set; }
@@ -28,7 +32,7 @@ namespace ATS.WEB.Areas.Teacher.Pages.Questions
 
         public async Task<IActionResult> OnGetAsync(int id, int lessonId, string backUrl)
         {
-            var question = await _context.Questions.FirstOrDefaultAsync(m => m.Id == id);
+            var question = await _context.Questions.Include(x => x.Answers).FirstOrDefaultAsync(m => m.Id == id);
 
             if (question is null) {
                 return NotFound();
@@ -37,7 +41,9 @@ namespace ATS.WEB.Areas.Teacher.Pages.Questions
             Input.QuestionId = question.Id;
             Input.QuestionText = question.QuestionText;
             Input.BackUrl = backUrl;
-            Input.LessonId = lessonId;     
+            Input.LessonId = lessonId;
+            Answers = question.Answers;
+
             return Page();
         }
 

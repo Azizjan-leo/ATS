@@ -4,14 +4,16 @@ using ATS.WEB.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ATS.WEB.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210605170914_Add_Answer_IsRight")]
+    partial class Add_Answer_IsRight
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -173,41 +175,6 @@ namespace ATS.WEB.Migrations
 
                     b.ToTable("Lessons");
                 });
-
-            modelBuilder.Entity("ATS.WEB.Data.Entities.Material", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int")
-                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                b.Property<string>("FileName")
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<string>("Name")
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<int?>("TeacherId")
-                    .HasColumnType("int");
-
-                b.Property<DateTime>("UploadDate")
-                    .HasColumnType("datetime2");
-
-                b.HasKey("Id");
-
-                b.HasIndex("TeacherId");
-
-                b.ToTable("Materials");
-            });
-
-            modelBuilder.Entity("ATS.WEB.Data.Entities.Material", b =>
-            {
-                b.HasOne("ATS.WEB.Data.Entities.Teacher", "Teacher")
-                    .WithMany()
-                    .HasForeignKey("TeacherId");
-
-                b.Navigation("Teacher");
-            });
 
             modelBuilder.Entity("ATS.WEB.Data.Entities.Question", b =>
                 {
