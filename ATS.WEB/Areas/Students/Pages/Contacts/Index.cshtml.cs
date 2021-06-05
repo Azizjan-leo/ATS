@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ATS.WEB.Data;
 using ATS.WEB.Data.Entities;
 
-namespace ATS.WEB.Areas.Stud.Pages.Contacts
+namespace ATS.WEB.Areas.Students.Pages.Contacts
 {
     public class IndexModel : PageModel
     {
