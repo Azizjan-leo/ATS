@@ -1,0 +1,33 @@
+﻿@page
+@model ATS.WEB.Areas.Students.Pages.Contacts.IndexModel
+
+@{
+    ViewData["Title"] = "Преподаватели";
+}
+
+<h1>Преподаватели</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Кафедра</th>
+            <th>Почта</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Teacher) {
+        <tr>
+            <td>
+                @item.User.Name
+            </td>
+            <td>
+                @item.Cathedra.Name
+            </td>
+            <td>
+                <a href="mailto: @item.User.Email"> @item.User.Email</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
