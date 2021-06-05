@@ -1,5 +1,4 @@
-﻿@using WEB.Data.Entities;
-@using WEB.Enums;
+﻿@using ATS.WEB.Data.Entities;
 @inject SignInManager<ApplicationUser> SignInManager
 <!DOCTYPE html>
 <html lang="en">
@@ -12,8 +11,8 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-info border-bottom box-shadow mb-4" >
-            <div class="container" >
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">ATS</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -22,32 +21,8 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Lessons/Index">Лабороторные работы</a>
+                            <a class="nav-link text-dark" asp-area="Student" asp-page="/Contacts/Index">Контакты</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Materials/Index">Учебные материалы</a>
-                        </li>
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            @if (User.IsInRole(Role.Admin.ToString()))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="Admin" asp-page="/Home/Index">Рабочий кабинет</a>
-                                </li>
-                            }
-                            else if (User.IsInRole(Role.Teacher.ToString()))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="Teacher" asp-page="/Home/Index">Рабочий кабинет</a>
-                                </li>
-                            }
-                            else if (User.IsInRole(Role.Student.ToString()))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="Students" asp-page="/Contacts/Index">Контакты преподавателей</a>
-                                </li>
-                            }
-                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

@@ -1,0 +1,39 @@
+﻿@model List<Question>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Question
+            </th>
+            <th>
+                Right answer
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-page="/Questions/Edit" asp-route-id="@item.Id" asp-route-lessonId="@ViewBag.LessonId" asp-route-backUrl="@ViewData["Title"]">
+                    @Html.DisplayFor(modelItem => item.QuestionText)
+                </a>
+            </td>
+            <td>
+                @if (item.RightAnswer is not null) {
+                    @Html.DisplayFor(modelItem => item.RightAnswer.AnswerText)
+                }
+            </td>
+            <td>
+                <a asp-page="/Questions/Delete" asp-route-id="@item.Id" asp-route-lessonId="@ViewBag.LessonId" asp-route-backUrl="@ViewData["Title"]">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div>
+    <p>
+        <a asp-page="/Questions/Create" asp-route-id="@ViewBag.LessonId" asp-route-backUrl="@ViewData["Title"]">Add new question</a>
+    </p>
+</div>

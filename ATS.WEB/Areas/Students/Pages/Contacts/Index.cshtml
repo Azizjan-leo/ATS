@@ -1,26 +1,22 @@
 ﻿@page
-@model ATS.WEB.Areas.Admin.Pages.Students.IndexModel
+@model ATS.WEB.Areas.Students.Pages.Contacts.IndexModel
 
 @{
-    ViewData["Title"] = "Студенты";
+    ViewData["Title"] = "Преподаватели";
 }
 
-<h1>Студенты</h1>
+<h1>Преподаватели</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>Имя</th>
             <th>Кафедра</th>
             <th>Почта</th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Student) {
+@foreach (var item in Model.Teacher) {
         <tr>
             <td>
                 @item.User.Name
@@ -29,10 +25,7 @@
                 @item.Cathedra.Name
             </td>
             <td>
-                @item.User.Email
-            </td>
-            <td>
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a href="mailto: @item.User.Email"> @item.User.Email</a>
             </td>
         </tr>
 }
