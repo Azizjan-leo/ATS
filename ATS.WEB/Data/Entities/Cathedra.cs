@@ -7,6 +7,7 @@ namespace ATS.WEB.Data.Entities {
 
         [Required]
         [StringLength(30, MinimumLength = 2)]
+        [Display(Name = "Название")]
         public virtual string Name { get; set; }
 
         public virtual List<Group> Groups { get; set; }

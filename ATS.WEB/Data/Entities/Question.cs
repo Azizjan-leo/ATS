@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ATS.WEB.Data.Entities {
     public class Question {
         public int Id { get; set; }
+        [Display(Name = "Текст вопроса")]
         public string QuestionText { get; set; }
         public virtual List<Answer> Answers { get; set; }
         public int? RightAnswerId { get; set; }

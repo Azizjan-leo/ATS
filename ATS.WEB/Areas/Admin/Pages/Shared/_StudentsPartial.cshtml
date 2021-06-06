@@ -1,7 +1,7 @@
 ﻿@model List<Student>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Создание новой</a>
 </p>
 <table class="table">
     <thead>
@@ -13,9 +13,9 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                <a asp-page="/Students/Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="/Students/Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="/Students/Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-page="/Students/Edit" asp-route-id="@item.Id">Редактирование</a> |
+                <a asp-page="/Students/Details" asp-route-id="@item.Id">Подробности</a> |
+                <a asp-page="/Students/Delete" asp-route-id="@item.Id">Удаление</a>
             </td>
         </tr>
 }
