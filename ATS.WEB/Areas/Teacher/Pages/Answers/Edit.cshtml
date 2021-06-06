@@ -2,12 +2,12 @@
 @model ATS.WEB.Areas.Teacher.Pages.Answers.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Редактор ответов";
 }
 
-<h1>Edit</h1>
+<h1>Редактор ответов</h1>
 
-<h4>Answer</h4>
+<h4>Ответ</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -33,7 +33,7 @@
 </div>
 
 <div>
-    <a asp-page="/Questions/Edit" asp-route-id="@Model.QuestionId">Back to the quesiton</a>
+    <a asp-page="/Questions/Edit" asp-area="Teacher" asp-route-id="@Model.QuestionId">Вернутся к уроку</a>
 </div>
 
 @section Scripts {

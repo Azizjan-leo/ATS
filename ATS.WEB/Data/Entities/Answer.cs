@@ -1,4 +1,6 @@
-﻿namespace ATS.WEB.Data.Entities {
+﻿using System.ComponentModel;
+
+namespace ATS.WEB.Data.Entities {
     public class Answer {
         public int Id { get; set; }
         public string AnswerText { get; set; }

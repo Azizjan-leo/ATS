@@ -2,7 +2,7 @@
 @model ATS.WEB.Areas.Teacher.Pages.Lessons.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Детальная информация";
     ViewBag.LessonId = Model.Lesson.Id;
 }
 
@@ -17,7 +17,7 @@
     {
         <a asp-page="./Edit" asp-route-id="@Model.Lesson.Id">Edit</a>
     }
-    <a href="#" onclick="history.back(-1);">Back to List</a>
+    <a href="#" onclick="history.back(-1);">Вернутся к просмотру</a>
 
 </div>
 <div>
