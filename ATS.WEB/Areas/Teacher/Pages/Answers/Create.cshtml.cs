@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using ATS.WEB.Data;
 using ATS.WEB.Data.Entities;
 
-namespace ATS.WEB.Areas.Teacher.Pages.Answers
-{
+namespace ATS.WEB.Areas.Teacher.Pages.Answers {
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -19,8 +14,9 @@ namespace ATS.WEB.Areas.Teacher.Pages.Answers
             _context = context;
         }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(int id)
         {
+            Input.QuestionId = id;
             return Page();
         }
 
@@ -52,7 +48,8 @@ namespace ATS.WEB.Areas.Teacher.Pages.Answers
 
             _context.Answers.Add(answer);
             await _context.SaveChangesAsync();
-            return RedirectToPage("./Index");
+
+            return RedirectToPage($"/Questions/Edit", new { id = Input.QuestionId });
         }
     }
 }

@@ -1,41 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ATS.WEB.Data;
 using ATS.WEB.Data.Entities;
+using System;
 
-namespace ATS.WEB.Areas.Teacher.Pages.Answers
-{
+namespace ATS.WEB.Areas.Teacher.Pages.Answers {
     public class EditModel : PageModel
     {
-        private readonly ATS.WEB.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public EditModel(ATS.WEB.Data.ApplicationDbContext context)
+        public EditModel(ApplicationDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
         public Answer Answer { get; set; }
+        [BindProperty]
+        public int QuestionId { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id, int questionId)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             Answer = await _context.Answers.FirstOrDefaultAsync(m => m.Id == id);
 
             if (Answer == null)
             {
                 return NotFound();
             }
+            QuestionId = questionId;
+
             return Page();
         }
 
@@ -48,30 +43,17 @@ namespace ATS.WEB.Areas.Teacher.Pages.Answers
                 return Page();
             }
 
-            _context.Attach(Answer).State = EntityState.Modified;
-
             try
             {
+                _context.Attach(Answer).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!AnswerExists(Answer.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+               throw;     
             }
 
-            return RedirectToPage("./Index");
-        }
-
-        private bool AnswerExists(int id)
-        {
-            return _context.Answers.Any(e => e.Id == id);
+            return RedirectToPage($"/Questions/Edit", new { id = QuestionId });
         }
     }
 }
