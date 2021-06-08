@@ -2,13 +2,13 @@
 @model ATS.WEB.Areas.Admin.Pages.Groups.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Подробности";
 }
 
-<h1>Details</h1>
+<h1>Подробости</h1>
 
 <div>
-    <h4>Group</h4>
+    <h4>Группы</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -23,6 +23,6 @@
     <partial name="_StudentsPartial" model="Model.Group.Students" />
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Group.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Edit" asp-route-id="@Model.Group.Id">Редактирование</a> |
+    <a asp-page="./Index">Назад</a>
 </div>
