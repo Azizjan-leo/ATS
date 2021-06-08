@@ -4,10 +4,10 @@
     <thead>
         <tr>
             <th>
-                Question
+                Вопрос
             </th>
             <th>
-                Right answer
+                Правильный ответ
             </th>
             <th></th>
         </tr>
@@ -26,7 +26,7 @@
                 }
             </td>
             <td>
-                <a asp-page="/Questions/Delete" asp-route-id="@item.Id" asp-route-lessonId="@ViewBag.LessonId" asp-route-backUrl="@ViewData["Title"]">Delete</a>
+                <a asp-page="/Questions/Delete" asp-route-id="@item.Id" asp-route-lessonId="@ViewBag.LessonId" asp-route-backUrl="@ViewData["Title"]">Удалить</a>
             </td>
         </tr>
 }
@@ -34,6 +34,6 @@
 </table>
 <div>
     <p>
-        <a asp-page="/Questions/Create" asp-route-id="@ViewBag.LessonId" asp-route-backUrl="@ViewData["Title"]">Add new question</a>
+        <a asp-page="/Questions/Create" asp-route-id="@ViewBag.LessonId" asp-route-backUrl="@ViewData["Title"]">Добавить новый вопрос</a>
     </p>
 </div>

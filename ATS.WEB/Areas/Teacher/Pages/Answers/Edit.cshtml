@@ -2,12 +2,12 @@
 @model ATS.WEB.Areas.Teacher.Pages.Answers.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Редактировать ответ";
 }
 
-<h1>Edit</h1>
+<h1>Редактировать ответ</h1>
 
-<h4>Answer</h4>
+<h4>Ответ</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -26,14 +26,14 @@
                 <input name="IsRight" type="hidden" value="false">
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="/Questions/Edit" asp-route-id="@Model.QuestionId">Back to the quesiton</a>
+    <a asp-page="/Questions/Edit" asp-area="Teacher" asp-route-id="@Model.QuestionId">Назад</a>
 </div>
 
 @section Scripts {

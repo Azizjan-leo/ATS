@@ -26,7 +26,7 @@ namespace ATS.WEB.Areas.Teacher.Pages.Lessons {
                 return NotFound();
             }
 
-            Lesson = await _context.Lessons.Include(x => x.Questions).FirstOrDefaultAsync(m => m.Id == id);
+            Lesson = await _context.Lessons.Include(x => x.Questions).ThenInclude(x=>x.Answers).FirstOrDefaultAsync(m => m.Id == id);
 
             if (Lesson == null)
             {

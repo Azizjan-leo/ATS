@@ -2,13 +2,13 @@
 @model ATS.WEB.Areas.Teacher.Pages.Materials.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Учебный материал";
 }
 
-<h1>Index</h1>
+<h1>Учебный материал</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Создать новый</a>
 </p>
 <table class="table">
     <thead>
@@ -33,9 +33,9 @@
                     <a href="~/materials/@item.FileName" download> @item.Name</a>
                 </td>
                 <td>
-                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-page="./Details" asp-route-id="@item.Id">Детали</a> |
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Редактировать</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Удалить</a>
                 </td>
             </tr>
         }
