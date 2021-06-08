@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ATS.WEB.Data;
 using ATS.WEB.Data.Entities;
+using System;
 
 namespace ATS.WEB.Areas.Teacher.Pages.Lessons {
     public class EditModel : PageModel
@@ -19,13 +20,8 @@ namespace ATS.WEB.Areas.Teacher.Pages.Lessons {
         [BindProperty]
         public Lesson Lesson { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             Lesson = await _context.Lessons.Include(x => x.Questions).FirstOrDefaultAsync(m => m.Id == id);
 
             if (Lesson == null)
@@ -50,24 +46,11 @@ namespace ATS.WEB.Areas.Teacher.Pages.Lessons {
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
-                if (!LessonExists(Lesson.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
             }
 
             return RedirectToPage("./Index");
-        }
-
-        private bool LessonExists(int id)
-        {
-            return _context.Lessons.Any(e => e.Id == id);
         }
     }
 }
