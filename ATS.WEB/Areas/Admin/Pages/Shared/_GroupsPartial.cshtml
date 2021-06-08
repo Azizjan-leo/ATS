@@ -1,13 +1,13 @@
 ﻿@model List<Group>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Создание новой</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                Group name
+                Название групп
             </th>
             <th></th>
         </tr>
@@ -19,9 +19,9 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                <a asp-page="/Groups/Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="/Groups/Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="/Groups/Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-page="/Groups/Edit" asp-route-id="@item.Id">Редактироване</a> |
+                <a asp-page="/Groups/Details" asp-route-id="@item.Id">Подробности</a> |
+                <a asp-page="/Groups/Delete" asp-route-id="@item.Id">Удаление</a>
             </td>
         </tr>
 }

@@ -11,8 +11,10 @@ namespace ATS.WEB.Data.Entities {
 
     public class UserViewModel {
         public string Id { get; set; }
+        [Display(Name = "Имя")]
         public string Name { get; set; }
         public string Email { get; set; }
+        [Display(Name = "Роль")]
         public string Role { get; set; }
     }
 }
