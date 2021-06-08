@@ -1,0 +1,32 @@
+﻿@page
+@model ATS.WEB.Pages.Feedback.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@foreach (var _teatchers in @Model.Teachers)
+{
+<h2>Преподователи кафедры: @_teatchers.Key.Name</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ФИО учителя</th>
+            <th>E-Mail</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in _teatchers) {
+        <tr>
+            <td>
+                <p>@item.User.Name</p>
+            </td>
+            <td>
+                <a href="mailto:@item.User.Email">@item.User.Email</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+}

@@ -1,7 +1,7 @@
 ﻿@using ATS.WEB.Data.Entities;
 @inject SignInManager<ApplicationUser> SignInManager
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,13 +21,16 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Teacher" asp-page="/Users/Index">Уроки</a>
+                            <a class="nav-link text-dark" asp-area="Teacher" asp-page="/Lessons/Index">Уроки</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Teacher" asp-page="/Cathedras/Index">Тесты</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Teacher" asp-page="/Materials/Index">Учебные материалы</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Teacher" asp-page="/Contacts/Index">Контакты</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -43,7 +46,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - ATS.WEB - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2021 - ATS.WEB
         </div>
     </footer>
 

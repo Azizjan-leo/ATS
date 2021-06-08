@@ -1,11 +1,11 @@
 ﻿@page
 @model ATS.WEB.Areas.Teacher.Pages.Questions.EditModel
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Редакторовать вопрос";
     ViewBag.QuestionId = Model.Input.QuestionId;
 }
 
-<h4>Input</h4>
+<h4>Редакторовать вопрос</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -20,14 +20,14 @@
                 <span asp-validation-for="Input.QuestionText" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="/Lessons/@Model.Input.BackUrl" asp-route-id="@Model.Input.LessonId">Back to Lesson</a>
+    <a asp-page="/Lessons/@Model.Input.BackUrl" asp-route-id="@Model.Input.LessonId">Назад</a>
 </div>
 
 <div>

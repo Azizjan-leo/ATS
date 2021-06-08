@@ -4,10 +4,10 @@
     <thead>
         <tr>
             <th>
-                Answer
+                Ответ
             </th>
             <th>
-                Right answer
+                Ответ верный?
             </th>
             <th></th>
         </tr>
@@ -24,8 +24,8 @@
                 @item.IsRight
             </td>
             <td>
-                <a asp-page="/Answers/Edit" asp-route-id="@item.Id" asp-route-questionId="@ViewBag.QuestionId">Edit</a> |
-                <a asp-page="/Answers/Delete" asp-route-id="@item.Id" asp-route-questionId="@ViewBag.QuestionId">Delete</a>
+                <a asp-page="/Answers/Edit" asp-route-id="@item.Id" asp-route-questionId="@ViewBag.QuestionId">Редактировать</a> |
+                <a asp-page="/Answers/Delete" asp-route-id="@item.Id" asp-route-questionId="@ViewBag.QuestionId">Удалить</a>
             </td>
         </tr>
 }
@@ -33,6 +33,6 @@
 </table>
 <div>
     <p>
-        <a asp-page="/Answers/Create" asp-route-id="@ViewBag.QuestionId">Add new answer</a>
+        <a asp-page="/Answers/Create" asp-route-id="@ViewBag.QuestionId">Добавить новый ответ</a>
     </p>
 </div>
