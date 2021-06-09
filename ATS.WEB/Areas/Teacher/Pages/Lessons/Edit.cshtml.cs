@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ATS.WEB.Data;
 using ATS.WEB.Data.Entities;
+using System;
 
 namespace ATS.WEB.Areas.Teacher.Pages.Lessons {
     public class EditModel : PageModel

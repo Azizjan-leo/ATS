@@ -9,7 +9,6 @@ namespace ATS.WEB.Data.Entities {
         public string AnswerText { get; set; }
         [Display(Name = "Вопрос")]
         public virtual Question Question { get; set; }
-        [NotMapped]
         [Display(Name = "Правильный")]
         public bool IsRight { get; set; }
     }
