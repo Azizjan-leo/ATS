@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using ATS.WEB.Data;
 using ATS.WEB.Data.Entities;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ATS.WEB.Areas.Teacher.Pages.Questions
 {
@@ -26,6 +27,7 @@ namespace ATS.WEB.Areas.Teacher.Pages.Questions
         public class InputModel {
             public int LessonId { get; set; }
             public int QuestionId { get; set; }
+            [Display(Name = "Текст вопроса")]
             public string QuestionText { get; set; }
             public string BackUrl { get; set; }
         }
