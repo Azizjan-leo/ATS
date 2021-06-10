@@ -11,13 +11,20 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Lesson.Id" />
-            @foreach (var question in Model.Lesson.Questions) {
-                <p>@question.QuestionText</p>
-                foreach (var answer in question.Answers) {
+            @Html.HiddenFor(m => m.Lesson.Topic)
+            @for (int i = 0; i < Model.Lesson.Questions.Count; i++)
+            {
+                <input type="hidden" name="Questions.Index" value="@i" />
+                @Html.HiddenFor(m => m.Lesson.Questions[i].QuestionText)
+                <p>@Model.Lesson.Questions[i].QuestionText</p>
+                @for (int j = 0; j < Model.Lesson.Questions[i].Answers.Count; j++)
+                {
+                    <input type="hidden" name="Questions[@i].Answers.Index" value="@j" />
+                    <input type="hidden" name="Questions[@i].Answers[@j].Id" value="@Model.Lesson.Questions[i].Answers[j].Id" />
+                    @Html.HiddenFor(m => m.Lesson.Questions[i].Answers[j].AnswerText)
                     <div>
-                        <label class="control-label">@answer.AnswerText</label>
-                        <input asp-for="@answer.IsRight">
+                        <label class="control-label">@Model.Lesson.Questions[i].Answers[j].AnswerText</label>
+                        @Html.CheckBoxFor(m => m.Lesson.Questions[i].Answers[j].IsRight)
                     </div>
                 }
             }
