@@ -14,10 +14,13 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
     {
         private readonly ApplicationDbContext _context;
 
-        public Index1Model(ApplicationDbContext context) {
+        public Index1Model(ApplicationDbContext context)
+        {
             _context = context;
         }
 
+        [BindProperty]
+        public bool TestString { get; set; }
         [BindProperty]
         public Lesson Lesson { get; set; }
 
@@ -26,11 +29,23 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
             Lesson = await _context.Lessons
                 .Include(x => x.Questions).ThenInclude(x => x.Answers)
                 .Include(x => x.Teacher)
+                .AsSplitQuery()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             //Lesson.Questions = Lesson.Questions.Where(x => x.Answers.Any()).ToList();
 
             return Page();
         }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            //Lesson = par;
+            return Page();
+        }
+
     }
 }
