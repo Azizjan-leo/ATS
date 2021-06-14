@@ -1,55 +1,59 @@
-﻿@model ATS.WEB.Data.Entities.TestResult
+﻿@page
+@model ATS.WEB.Areas.Students.Pages.Tests.TestIntroModel
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Тестирование";
 }
 
-<!DOCTYPE html>
+<h1>Тестирование</h1>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>TestIntro</title>
-</head>
-<body>
-
-<h4>TestResult</h4>
-<hr />
+<div>
+    <h4>Результаты теста</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TestResult.Answerer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TestResult.Answerer.User.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TestResult.Topic)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TestResult.Topic.Topic)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TestResult.Reviewer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TestResult.Reviewer.User.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TestResult.PassDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TestResult.PassDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TestResult.Score)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TestResult.Score)
+        </dd>
+    </dl>
+</div>
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="TestIntro">
+        <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="AnswererId" class="control-label"></label>
-                <select asp-for="AnswererId" class="form-control" asp-items="ViewBag.AnswererId"></select>
-                <span asp-validation-for="AnswererId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TopicId" class="control-label"></label>
-                <select asp-for="TopicId" class="form-control" asp-items="ViewBag.TopicId"></select>
-                <span asp-validation-for="TopicId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PassDate" class="control-label"></label>
-                <input asp-for="PassDate" class="form-control" />
-                <span asp-validation-for="PassDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Score" class="control-label"></label>
-                <input asp-for="Score" class="form-control" />
-                <span asp-validation-for="Score" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Начать тест" class="btn btn-primary" disabled="@(Model.DisbaleRunTest ? "disabled" : null)" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-page="./Index">Назад к списку</a>
 </div>
-
-</body>
-</html>

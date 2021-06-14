@@ -8,36 +8,55 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            @(Html.CheckBox("TestString", Model.TestString))
+            @Html.HiddenFor(m => m.Lesson.Id)
             @for (int i = 0; i < Model.Lesson.Questions.Count; i++)
             {
                 <input type="hidden" name="Questions.Index" value="@i" />
                 @Html.HiddenFor(m => m.Lesson.Questions[i].QuestionText)
-                <p>@Model.Lesson.Questions[i].QuestionText</p>
+                @Html.HiddenFor(m => m.Lesson.Questions[i].Id)
+                <h2>@Model.Lesson.Questions[i].QuestionText</h2>
                 @for (int j = 0; j < Model.Lesson.Questions[i].Answers.Count; j++)
                 {
                     <input type="hidden" name="Questions[@i].Answers.Index" value="@j" />
-                    <input type="hidden" name="Questions[@i].Answers[@j].Id" value="@Model.Lesson.Questions[i].Answers[j].Id" />
+                    @Html.HiddenFor(m=>m.Lesson.Questions[i].Answers[j].Id)
+                    @Html.HiddenFor(m=>m.Lesson.Questions[i].Answers[j].IsRight)
                     @Html.HiddenFor(m => m.Lesson.Questions[i].Answers[j].AnswerText)
                     <div>
-                        <label class="control-label">@Model.Lesson.Questions[i].Answers[j].AnswerText</label>
                         <label class="switch">
-                            @Html.CheckBoxFor(m => m.Lesson.Questions[i].Answers[j].IsRight)
+                            @Html.CheckBoxFor(m => m.Lesson.Questions[i].Answers[j].RightStudent)
                             <span class="slider round"></span>
                         </label>
+                        <label class="control-label h3">@Model.Lesson.Questions[i].Answers[j].AnswerText</label>
                     </div>
                 }
             }
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div>
+                                <input type="submit" value="Предыдущий" class="btn btn-primary" asp-all-route-data='new Dictionary<string, string> { {"q", Request.Query["q"].ToString()} }' asp-route-id="@Model.Lesson.Id" asp-page-handler="Prev" disabled="@(Model.DisbalePrev ? "disabled" : null)" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <input type="submit" value="Следующий" class="btn btn-primary" asp-all-route-data='new Dictionary<string, string> { {"q", Request.Query["q"].ToString()} }' asp-route-id="@Model.Lesson.Id" asp-page-handler="Next" disabled="@(Model.DisbaleNext ? "disabled" : null )" />
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </form>
     </div>
-</div>
-<div>
-    <a asp-page="./Index">Назад к списку</a>
 </div>
 
 @section Scripts
