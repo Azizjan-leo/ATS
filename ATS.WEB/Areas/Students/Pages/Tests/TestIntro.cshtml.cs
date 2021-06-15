@@ -129,5 +129,26 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
             await _context.SaveChangesAsync();
             return RedirectToPage("./Pass", new { id = id.ToString(), q });
         }
+
+        public string GetTextScore(int? score) 
+        {
+            if (!score.HasValue)
+            {
+                return null;
+            }
+            if (score.Value > 87)
+            {
+                return "Отлично";
+            }
+            else if (score.Value > 73)
+            {
+                return "Хорошо";
+            }
+            else if (score.Value > 61) 
+            {
+                return "Удовлетворительно";
+            }
+            return "Неудовлетворительно";
+        }
     }
 }

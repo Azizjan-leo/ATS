@@ -33,13 +33,13 @@
             @Html.DisplayNameFor(model => model.TestResult.PassDate)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TestResult.PassDate)
+            <p>@(Model.TestResult.PassDate == default(DateTime) ? null: Model.TestResult.PassDate)</p>
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.TestResult.Score)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TestResult.Score)
+            <p>@Model.GetTextScore(Model.TestResult.Score)</p>
         </dd>
     </dl>
 </div>

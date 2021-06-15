@@ -23,8 +23,6 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
         }
 
         [BindProperty]
-        public bool? TestString { get; set; }
-        [BindProperty]
         public Lesson Lesson { get; set; }
 
         public Student Student { get; private set; }
@@ -108,7 +106,7 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
             {
                 return NotFound();
             }
-            int score = 0;
+            int rightquestions = 0;
             foreach (var question in Lesson.Questions)
             {
                 var personanswer = lastTests.Answers.Where(pa => pa.TestResultQuestionId == question.Id).ToList();
@@ -123,10 +121,10 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
                 }
                 if (rightanswer)
                 {
-                    score += 10;
+                    rightquestions += 1;
                 }
             }
-            lastTests.Score = score;
+            lastTests.Score = 100 - (Lesson.Questions.Count / rightquestions);
             lastTests.PassDate = DateTime.Now;
             await _context.SaveChangesAsync();
             return RedirectToPage("./TestIntro", new { id });
