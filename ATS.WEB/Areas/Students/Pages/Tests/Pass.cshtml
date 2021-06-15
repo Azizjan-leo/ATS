@@ -1,0 +1,123 @@
+﻿@page
+@model ATS.WEB.Areas.Students.Pages.Tests.Index1Model
+@{
+    ViewData["Title"] = $"Тест на тему {Model.Lesson.Topic}";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            @Html.HiddenFor(m => m.Lesson.Id)
+            @for (int i = 0; i < Model.Lesson.Questions.Count; i++)
+            {
+                <input type="hidden" name="Questions.Index" value="@i" />
+                @Html.HiddenFor(m => m.Lesson.Questions[i].QuestionText)
+                @Html.HiddenFor(m => m.Lesson.Questions[i].Id)
+                <h2>@Model.Lesson.Questions[i].QuestionText</h2>
+                @for (int j = 0; j < Model.Lesson.Questions[i].Answers.Count; j++)
+                {
+                    <input type="hidden" name="Questions[@i].Answers.Index" value="@j" />
+                    @Html.HiddenFor(m=>m.Lesson.Questions[i].Answers[j].Id)
+                    @Html.HiddenFor(m=>m.Lesson.Questions[i].Answers[j].IsRight)
+                    @Html.HiddenFor(m => m.Lesson.Questions[i].Answers[j].AnswerText)
+                    <div>
+                        <label class="switch">
+                            @Html.CheckBoxFor(m => m.Lesson.Questions[i].Answers[j].RightStudent)
+                            <span class="slider round"></span>
+                        </label>
+                        <label class="control-label h3">@Model.Lesson.Questions[i].Answers[j].AnswerText</label>
+                    </div>
+                }
+            }
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div>
+                                <input type="submit" value="Предыдущий" class="btn btn-primary" asp-all-route-data='new Dictionary<string, string> { {"q", Request.Query["q"].ToString()} }' asp-route-id="@Model.Lesson.Id" asp-page-handler="Prev" disabled="@(Model.DisbalePrev ? "disabled" : null)" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <input type="submit" value="Следующий" class="btn btn-primary" asp-all-route-data='new Dictionary<string, string> { {"q", Request.Query["q"].ToString()} }' asp-route-id="@Model.Lesson.Id" asp-page-handler="Next" disabled="@(Model.DisbaleNext ? "disabled" : null )" />
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 20px;
+                width: 20px;
+                left: 2px;
+                bottom: 2px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(20px);
+            -ms-transform: translateX(20px);
+            transform: translateX(20px);
+        }
+
+        .slider.round {
+            border-radius: 24px;
+        }
+
+            .slider.round:before {
+                border-radius: 50%;
+            }
+    </style>
+}

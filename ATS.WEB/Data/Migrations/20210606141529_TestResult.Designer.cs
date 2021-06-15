@@ -4,14 +4,16 @@ using ATS.WEB.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ATS.WEB.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210606141529_TestResult")]
+    partial class TestResult
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,13 +37,7 @@ namespace ATS.WEB.Migrations
                     b.Property<int?>("QuestionId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("RightStudent")
-                        .HasColumnType("bit");
-
                     b.Property<int?>("TestResultId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TestResultQuestionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -346,20 +342,20 @@ namespace ATS.WEB.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c289ef29-d7fc-4884-a694-2183fe9ab285",
-                            ConcurrencyStamp = "390063fd-f315-492d-894d-018af3235821",
+                            Id = "a709017d-df15-45fa-a331-9e4b4e3defde",
+                            ConcurrencyStamp = "171ee3e1-b89f-406b-abbd-7141c1ddcd58",
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = "21f4c81b-080b-4c70-ab72-b398e6da4346",
-                            ConcurrencyStamp = "4cd6f68e-bf4d-42c7-8ed1-16eda41001aa",
+                            Id = "74a13404-eccb-45ff-9060-f97e653c2c61",
+                            ConcurrencyStamp = "12721f9f-37b0-46c0-80dc-9ffc33201c3b",
                             Name = "Teacher"
                         },
                         new
                         {
-                            Id = "207717ea-38e2-41bb-8b71-b05c39ce9e85",
-                            ConcurrencyStamp = "77cc782e-598d-4230-8f2f-cf4e02399a8c",
+                            Id = "9a40d660-a54a-4202-ad0d-2f2c8a4e9bd4",
+                            ConcurrencyStamp = "ac222b2c-5d99-4368-b748-52d13d4b64cd",
                             Name = "Student"
                         });
                 });

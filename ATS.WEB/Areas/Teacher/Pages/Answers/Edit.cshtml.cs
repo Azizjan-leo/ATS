@@ -45,6 +45,7 @@ namespace ATS.WEB.Areas.Teacher.Pages.Answers {
 
             try
             {
+                Answer.QuestionId = QuestionId;
                 _context.Attach(Answer).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }

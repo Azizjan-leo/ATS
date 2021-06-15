@@ -1,0 +1,29 @@
+﻿@page
+@model ATS.WEB.Areas.Students.Pages.Tests.TestModel
+
+@{
+    ViewData["Title"] = "Тесты";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                Тесты
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Lessons) {
+        <tr>
+            <td></td>
+            <td>
+                <a asp-page="./TestIntro" asp-route-id="@item.Id">@item.Topic</a>
+            </td>
+            <td></td>
+        </tr>
+}
+    </tbody>
+</table>

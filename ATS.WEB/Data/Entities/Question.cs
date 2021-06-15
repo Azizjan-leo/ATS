@@ -15,7 +15,7 @@ namespace ATS.WEB.Data.Entities {
         {
             get
             {
-                return Answers != null && Answers.Any() ? Answers.FirstOrDefault(a => a.IsRight) : null;
+                return Answers != null && Answers.Any() ? Answers.Where(a=>a != null).FirstOrDefault(a => a.IsRight) : null;
             }
         }
         public virtual Lesson Lesson { get; set; }
