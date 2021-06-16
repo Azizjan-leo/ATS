@@ -102,7 +102,7 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
                 .Include(x => x.Questions)
                 .AsSplitQuery()
                 .FirstOrDefaultAsync(x => x.Id == id);
-            if (Lesson == null)
+            if (Lesson == null || Lesson.Questions == null || !Lesson.Questions.Any())
             {
                 return NotFound();
             }
@@ -124,7 +124,7 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
                     rightquestions += 1;
                 }
             }
-            lastTests.Score = 100 - (Lesson.Questions.Count / rightquestions);
+            lastTests.Score = 100 * (1 - rightquestions/Lesson.Questions.Count );
             lastTests.PassDate = DateTime.Now;
             await _context.SaveChangesAsync();
             return RedirectToPage("./TestIntro", new { id });
