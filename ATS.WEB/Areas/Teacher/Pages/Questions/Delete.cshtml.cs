@@ -52,6 +52,8 @@ namespace ATS.WEB.Areas.Teacher.Pages.Questions
 
             if (question != null)
             {
+                await _context.Answers.Where(a=>a.QuestionId == Input.QuestionId || a.TestResultQuestionId == Input.QuestionId).ToListAsync();
+                _context.Answers.RemoveRange(_context.Answers.Where(a=>a.TestResultQuestionId == Input.QuestionId));
                 _context.Questions.Remove(question);
                 await _context.SaveChangesAsync();
             }

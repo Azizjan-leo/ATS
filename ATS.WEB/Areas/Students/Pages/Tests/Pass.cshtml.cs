@@ -124,7 +124,7 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
                     rightquestions += 1;
                 }
             }
-            lastTests.Score = 100 * (1 - rightquestions/Lesson.Questions.Count );
+            lastTests.Score = 100 * ( rightquestions/Lesson.Questions.Count );
             lastTests.PassDate = DateTime.Now;
             await _context.SaveChangesAsync();
             return RedirectToPage("./TestIntro", new { id });

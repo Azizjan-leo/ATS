@@ -49,6 +49,8 @@ namespace ATS.WEB.Areas.Teacher.Pages.Lessons
 
             if (Lesson != null)
             {
+                await _context.TestResults.Include(x=>x.Answers).Where(tr => tr.Topic == Lesson).ToListAsync();
+                await _context.Questions.Include(x=>x.Answers).Where(a => a.Lesson == Lesson).ToListAsync();
                 _context.Lessons.Remove(Lesson);
                 await _context.SaveChangesAsync();
             }
