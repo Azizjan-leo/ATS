@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ATS.WEB.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210614141102_Correct_Answer")]
-    partial class Correct_Answer
+    [Migration("20210617191714_add_TestAnswer")]
+    partial class add_TestAnswer
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,20 +37,9 @@ namespace ATS.WEB.Migrations
                     b.Property<int?>("QuestionId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("RightStudent")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("TestResultId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TestResultQuestionId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("QuestionId");
-
-                    b.HasIndex("TestResultId");
 
                     b.ToTable("Answers");
                 });
@@ -285,6 +274,36 @@ namespace ATS.WEB.Migrations
                     b.ToTable("Teachers");
                 });
 
+            modelBuilder.Entity("ATS.WEB.Data.Entities.TestAnswer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AnswerId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TestResultId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("UserAnswer")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnswerId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("TestResultId");
+
+                    b.ToTable("TestAnswers");
+                });
+
             modelBuilder.Entity("ATS.WEB.Data.Entities.TestResult", b =>
                 {
                     b.Property<int>("Id")
@@ -348,20 +367,20 @@ namespace ATS.WEB.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c289ef29-d7fc-4884-a694-2183fe9ab285",
-                            ConcurrencyStamp = "390063fd-f315-492d-894d-018af3235821",
+                            Id = "312eb2fe-b6bb-49b4-a27c-744e7a602157",
+                            ConcurrencyStamp = "21467acc-7752-49a5-85bb-4c7c7259ef47",
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = "21f4c81b-080b-4c70-ab72-b398e6da4346",
-                            ConcurrencyStamp = "4cd6f68e-bf4d-42c7-8ed1-16eda41001aa",
+                            Id = "d151484a-435a-4396-97e8-cc5b2fce2a43",
+                            ConcurrencyStamp = "dd67a25d-342b-4b30-ba23-b384de412a7b",
                             Name = "Teacher"
                         },
                         new
                         {
-                            Id = "207717ea-38e2-41bb-8b71-b05c39ce9e85",
-                            ConcurrencyStamp = "77cc782e-598d-4230-8f2f-cf4e02399a8c",
+                            Id = "1473ca6d-14fe-4f1b-a2e3-2457e1099770",
+                            ConcurrencyStamp = "86894fff-3fc1-4ab2-b359-44f207b66331",
                             Name = "Student"
                         });
                 });
@@ -480,10 +499,6 @@ namespace ATS.WEB.Migrations
                         .WithMany("Answers")
                         .HasForeignKey("QuestionId");
 
-                    b.HasOne("ATS.WEB.Data.Entities.TestResult", null)
-                        .WithMany("Answers")
-                        .HasForeignKey("TestResultId");
-
                     b.Navigation("Question");
                 });
 
@@ -557,6 +572,27 @@ namespace ATS.WEB.Migrations
                     b.Navigation("Cathedra");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ATS.WEB.Data.Entities.TestAnswer", b =>
+                {
+                    b.HasOne("ATS.WEB.Data.Entities.Answer", "Answer")
+                        .WithMany()
+                        .HasForeignKey("AnswerId");
+
+                    b.HasOne("ATS.WEB.Data.Entities.Question", "Question")
+                        .WithMany()
+                        .HasForeignKey("QuestionId");
+
+                    b.HasOne("ATS.WEB.Data.Entities.TestResult", "TestResult")
+                        .WithMany("Answers")
+                        .HasForeignKey("TestResultId");
+
+                    b.Navigation("Answer");
+
+                    b.Navigation("Question");
+
+                    b.Navigation("TestResult");
                 });
 
             modelBuilder.Entity("ATS.WEB.Data.Entities.TestResult", b =>

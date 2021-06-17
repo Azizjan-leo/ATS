@@ -22,8 +22,12 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
             _userManager = userManager;
         }
 
-        [BindProperty]
         public Lesson Lesson { get; set; }
+
+        public string QuestionText { get; set; }
+
+        [BindProperty]
+        public IList<TestAnswer> TestAnswers { get; set; }
 
         public Student Student { get; private set; }
 
@@ -34,11 +38,16 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
         public async Task<IActionResult> OnGet(int id, int q)
         {
             Lesson = await _context.Lessons
-                .Include(x => x.Questions).ThenInclude(x => x.Answers)
-                .Include(x => x.Teacher)
+                .Include(x=>x.Questions)
                 .AsSplitQuery()
                 .FirstOrDefaultAsync(x => x.Id == id);
+            
             if (Lesson == null)
+            {
+                return NotFound();
+            }
+            var lastTest = await GetTestResult();
+            if (lastTest == null)
             {
                 return NotFound();
             }
@@ -50,18 +59,11 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
             {
                 DisbaleNext = true;
             }
-            var lastTests = await GetTestResult();
-            if (lastTests == null)
-            {
-                return NotFound();
-            }
-            Lesson.Questions = Lesson.Questions.Where(qq => qq.Id == q).ToList();
-            if (!Lesson.Questions.Any())
-            {
-                return NotFound();
-            }
-            Lesson.Questions.First().Answers = lastTests.Answers.Where(a => a.TestResultQuestionId == q).ToList() ;
-            //Lesson.Questions = Lesson.Questions.Where(x => x.Answers.Any()).ToList();
+
+            TestAnswers = lastTest.Answers.Where(a => a.QuestionId == q).ToList();
+            var question = Lesson.Questions.FirstOrDefault(_q => _q.Id == q);
+
+            QuestionText = question == null?"Не удается загрузить текст вопроса": question.QuestionText;
             return Page();
         }
 
@@ -78,7 +80,7 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
             {
                 return null;
             }
-            var lastTests = await _context.TestResults.Include(x=>x.Answers).FirstOrDefaultAsync(tr => tr.Answerer == Student && tr.Topic.Id == Lesson.Id);
+            var lastTests = await _context.TestResults.Include(x=>x.Answers).ThenInclude(x=>x.Answer).FirstOrDefaultAsync(tr => tr.Answerer == Student && tr.Topic.Id == Lesson.Id);
             if (lastTests == null)
             {
                 return null;
@@ -92,29 +94,30 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
             {
                 return Page();
             }
-            //Lesson = par;
-            var lastTests = await GetTestResult();
-            if (lastTests == null)
+            
+            Lesson = await _context.Lessons
+                .Include(x => x.Questions).ThenInclude(x=>x.Answers)
+                .AsSplitQuery()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            var lastTest = await GetTestResult();
+            if (lastTest == null)
             {
                 return NotFound();
             }
-            Lesson = await _context.Lessons
-                .Include(x => x.Questions)
-                .AsSplitQuery()
-                .FirstOrDefaultAsync(x => x.Id == id);
             if (Lesson == null || Lesson.Questions == null || !Lesson.Questions.Any())
             {
                 return NotFound();
             }
             int rightquestions = 0;
-            foreach (var question in Lesson.Questions)
+
+            foreach (var group_answer in lastTest.Answers.GroupBy(a=>a.Question))
             {
-                var personanswer = lastTests.Answers.Where(pa => pa.TestResultQuestionId == question.Id).ToList();
                 var rightanswer = true;
-                for (int i = 0; i < personanswer.Count(); i++)
+                foreach (var item in group_answer)
                 {
-                    if (personanswer[i].IsRight != personanswer[i].RightStudent)
-                    {
+                    if (item.UserAnswer != item.Answer.IsRight) 
+                    { 
                         rightanswer = false;
                         break;
                     }
@@ -124,15 +127,15 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
                     rightquestions += 1;
                 }
             }
-            lastTests.Score = 100 * ( rightquestions/Lesson.Questions.Count );
-            lastTests.PassDate = DateTime.Now;
+            lastTest.Score = 100 * ( rightquestions/Lesson.Questions.Count );
+            lastTest.PassDate = DateTime.Now;
             await _context.SaveChangesAsync();
             return RedirectToPage("./TestIntro", new { id });
         }
 
         public async Task<IActionResult> OnPostPrevAsync(int id, int q)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || !CheckModelError())
             {
                 return Page();
             }
@@ -150,14 +153,20 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
             {
                 return NotFound();
             }
-            var answers = lastTests.Answers.Where(a => a.TestResultQuestionId == q).ToList();
+            var answers = lastTests.Answers.Where(a => a.QuestionId == q).ToList();
             if (!answers.Any())
             {
                 return NotFound();
             }
-            for (int i = 0; i < Lesson.Questions.First().Answers.Count(); i++)
+
+            for (int i = 0; i < TestAnswers.Count; i++)
             {
-                answers[i].RightStudent = Lesson.Questions.First().Answers[i].RightStudent;
+                var userAnswer = lastTests.Answers.FirstOrDefault(a=>a.AnswerId == TestAnswers[i].Id);
+                if (userAnswer == null)
+                {
+                    continue;
+                }
+                TestAnswers[i].UserAnswer = userAnswer.UserAnswer;
             }
             await _context.SaveChangesAsync();
             if (_Lesson.Questions.Select(x => x.Id).Any() && _Lesson.Questions.Select(x => x.Id).First() == q)
@@ -168,20 +177,25 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
             return RedirectToPage("./Pass", new { id, q = questionid });
         }
 
+        public bool CheckModelError() 
+        {
+            if (TestAnswers.Count(a=>a.UserAnswer)>1)
+            {
+                ModelState.AddModelError(string.Format(""), "Выбрано более одного ответа");
+                return false;
+            }
+            if (TestAnswers.Count(a=>a.UserAnswer)<1)
+            {
+                ModelState.AddModelError(string.Format(""), "Не выбрано ни одного ответа");
+                return false;
+            }
+            return true;
+        }
+
         public async Task<IActionResult> OnPostNextAsync(int id, int q)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || !CheckModelError())
             {
-                return Page();
-            }
-            if (Lesson.Questions.First().Answers.Count(a=>a.RightStudent)>1)
-            {
-                ModelState.AddModelError(string.Format("", q, 0), "Выбрано более одного правильного ответа");
-                return Page();
-            }
-            if (Lesson.Questions.First().Answers.Count(a=>a.RightStudent)<1)
-            {
-                ModelState.AddModelError(string.Format("", q, 0), "Не выбрано ни одного правильного ответа");
                 return Page();
             }
             //Lesson = par;
@@ -198,15 +212,22 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
             {
                 return NotFound();
             }
-            var answers = lastTests.Answers.Where(a => a.TestResultQuestionId == q).ToList();
+            var answers = lastTests.Answers.Where(a => a.QuestionId == q).ToList();
             if (!answers.Any())
             {
                 return NotFound();
             }
-            for (int i = 0; i < Lesson.Questions.First().Answers.Count(); i++)
+
+            for (int i = 0; i < TestAnswers.Count; i++)
             {
-                answers[i].RightStudent = Lesson.Questions.First().Answers[i].RightStudent;
+                var userAnswer = lastTests.Answers.FirstOrDefault(a => a.AnswerId == TestAnswers[i].Id);
+                if (userAnswer == null)
+                {
+                    continue;
+                }
+                TestAnswers[i].UserAnswer = userAnswer.UserAnswer;
             }
+
             await _context.SaveChangesAsync();
             if (_Lesson.Questions.Select(x => x.Id).Last() == q)
             {

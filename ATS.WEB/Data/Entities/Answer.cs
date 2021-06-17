@@ -11,10 +11,5 @@ namespace ATS.WEB.Data.Entities {
         public virtual Question Question { get; set; }
         [Display(Name = "Правильный")]
         public bool IsRight { get; set; }
-        [Display(Name = "Ответ студента")]
-        public bool RightStudent { get; set; }
-        public int? TestResultQuestionId { get; set; }
-        public int? TestResultId { get; set; }
-        public virtual TestResult TestResult { get; set; }
     }
 }

@@ -53,7 +53,7 @@ namespace ATS.WEB.Areas.Teacher.Pages.Answers
 
             if (answer != null)
             {
-                _context.Answers.RemoveRange(_context.Answers.Where(a => a.TestResultQuestionId == Input.QuestionId && a.AnswerText == answer.AnswerText));
+                _context.TestAnswers.RemoveRange(_context.TestAnswers.Where(a => a.QuestionId == Input.QuestionId));
                 _context.Answers.Remove(answer);
                 await _context.SaveChangesAsync();
             }

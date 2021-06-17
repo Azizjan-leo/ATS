@@ -48,10 +48,6 @@ namespace ATS.WEB.Areas.Teacher.Pages.Answers {
             {
                 Answer.QuestionId = QuestionId;
                 _context.Attach(Answer).State = EntityState.Modified;
-                foreach (var item in _context.Answers.Where(a => a.TestResultQuestionId == QuestionId && a.AnswerText == Answer.AnswerText))
-                {
-                    //TODO: you need to change the database architecture
-                }
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
