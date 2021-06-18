@@ -11,12 +11,14 @@
     <div class="col-md-12">
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
+            @Html.HiddenFor(m => m.Lesson.Id)
+            @Html.HiddenFor(m => m.Lesson.Topic)
             <h2>@Model.QuestionText</h2>
             @for (int i = 0; i < Model.TestAnswers.Count; i++)
             {
                 <input type="hidden" name="TestAnswers.Index" value="@i" />
                 @Html.HiddenFor(m => m.TestAnswers[i].Id)
-                @Html.HiddenFor(m => m.TestAnswers[i].UserAnswer)
+                @Html.HiddenFor(m => m.TestAnswers[i].Answer.AnswerText)
                 <div>
                     <label class="switch">
                         @Html.CheckBoxFor(m => m.TestAnswers[i].UserAnswer)

@@ -31,9 +31,9 @@ namespace ATS.WEB.Data
               new IdentityRole(Enums.Role.Teacher.ToString()),
               new IdentityRole(Enums.Role.Student.ToString())
             );
-            //builder.Entity<Question>().HasMany(q => q.Answers).WithOne(a => a.Question).OnDelete(DeleteBehavior.Cascade);
-            //builder.Entity<TestResult>().HasMany(q => q.Answers).WithOne(a => a.TestResult).OnDelete(DeleteBehavior.Cascade);
-            //builder.Entity<Lesson>().HasMany(q => q.Questions).WithOne(a => a.Lesson).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<Question>().HasMany(q => q.Answers).WithOne(a => a.Question).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<TestResult>().HasMany(q => q.Answers).WithOne(a => a.TestResult).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<Lesson>().HasMany(q => q.Questions).WithOne(a => a.Lesson).OnDelete(DeleteBehavior.Cascade);
         }
 
 
