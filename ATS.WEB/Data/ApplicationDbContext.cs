@@ -9,7 +9,6 @@ namespace ATS.WEB.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
         }
 
         public DbSet<Group> Groups { get; set; }
