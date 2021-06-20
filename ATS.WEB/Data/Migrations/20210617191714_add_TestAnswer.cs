@@ -124,21 +124,6 @@ namespace ATS.WEB.Migrations
                 type: "int",
                 nullable: true);
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "a709017d-df15-45fa-a331-9e4b4e3defde", "171ee3e1-b89f-406b-abbd-7141c1ddcd58", "Admin", null });
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "74a13404-eccb-45ff-9060-f97e653c2c61", "12721f9f-37b0-46c0-80dc-9ffc33201c3b", "Teacher", null });
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9a40d660-a54a-4202-ad0d-2f2c8a4e9bd4", "ac222b2c-5d99-4368-b748-52d13d4b64cd", "Student", null });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Answers_TestResultId",
                 table: "Answers",
