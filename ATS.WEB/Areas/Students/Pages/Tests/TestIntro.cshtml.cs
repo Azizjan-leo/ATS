@@ -57,7 +57,7 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
             {
                 return NotFound();
             }
-
+           
             var lastTest = await _context.TestResults
                 .Include(x => x.Reviewer).ThenInclude(x => x.User)
                 .FirstOrDefaultAsync(tr => tr.Answerer == Student && tr.Topic.Id == Lesson.Id);
@@ -129,9 +129,9 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
                     }
                 ).ToList()
             ).ToList();
-            _context.Attach<TestResult>(testResult);
-            var q = testResult.Answers.First().Id.ToString();
+            _context.TestResults.Add(testResult);
             await _context.SaveChangesAsync();
+            var q = testResult.Answers.First().Question.Id.ToString();
             return RedirectToPage("./Pass", new { id = id.ToString(), q });
         }
 

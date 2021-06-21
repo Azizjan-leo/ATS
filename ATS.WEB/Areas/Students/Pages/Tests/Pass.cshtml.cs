@@ -147,7 +147,7 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
             }
             for (int i = 0; i < TestAnswers.Count; i++)
             {
-                var userAnswer = lastTest.Answers.FirstOrDefault(a => a.AnswerId == TestAnswers[i].Id);
+                var userAnswer = lastTest.Answers.FirstOrDefault(a => a.Id == TestAnswers[i].Id);
                 if (userAnswer == null)
                 {
                     continue;
