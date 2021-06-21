@@ -19,6 +19,7 @@ namespace ATS.WEB.Data
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Material> Materials { get; set; }
+        public DbSet<TestAnswer> TestAnswers { get; set; }
         public DbSet<TestResult> TestResults { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder) {
@@ -28,8 +29,12 @@ namespace ATS.WEB.Data
               new IdentityRole(Enums.Role.Admin.ToString()),
               new IdentityRole(Enums.Role.Teacher.ToString()),
               new IdentityRole(Enums.Role.Student.ToString())
-              );
+            );
+            builder.Entity<Question>().HasMany(q => q.Answers).WithOne(a => a.Question).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<TestResult>().HasMany(q => q.Answers).WithOne(a => a.TestResult).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<Lesson>().HasMany(q => q.Questions).WithOne(a => a.Lesson).OnDelete(DeleteBehavior.Cascade);
         }
+
 
     }
 }

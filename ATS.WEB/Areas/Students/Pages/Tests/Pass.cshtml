@@ -12,26 +12,20 @@
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             @Html.HiddenFor(m => m.Lesson.Id)
-            @for (int i = 0; i < Model.Lesson.Questions.Count; i++)
+            @Html.HiddenFor(m => m.Lesson.Topic)
+            <h2>@Model.QuestionText</h2>
+            @for (int i = 0; i < Model.TestAnswers.Count; i++)
             {
-                <input type="hidden" name="Questions.Index" value="@i" />
-                @Html.HiddenFor(m => m.Lesson.Questions[i].QuestionText)
-                @Html.HiddenFor(m => m.Lesson.Questions[i].Id)
-                <h2>@Model.Lesson.Questions[i].QuestionText</h2>
-                @for (int j = 0; j < Model.Lesson.Questions[i].Answers.Count; j++)
-                {
-                    <input type="hidden" name="Questions[@i].Answers.Index" value="@j" />
-                    @Html.HiddenFor(m=>m.Lesson.Questions[i].Answers[j].Id)
-                    @Html.HiddenFor(m=>m.Lesson.Questions[i].Answers[j].IsRight)
-                    @Html.HiddenFor(m => m.Lesson.Questions[i].Answers[j].AnswerText)
-                    <div>
-                        <label class="switch">
-                            @Html.CheckBoxFor(m => m.Lesson.Questions[i].Answers[j].RightStudent)
-                            <span class="slider round"></span>
-                        </label>
-                        <label class="control-label h3">@Model.Lesson.Questions[i].Answers[j].AnswerText</label>
-                    </div>
-                }
+                <input type="hidden" name="TestAnswers.Index" value="@i" />
+                @Html.HiddenFor(m => m.TestAnswers[i].Id)
+                @Html.HiddenFor(m => m.TestAnswers[i].Answer.AnswerText)
+                <div>
+                    <label class="switch">
+                        @Html.CheckBoxFor(m => m.TestAnswers[i].UserAnswer)
+                        <span class="slider round"></span>
+                    </label>
+                    <label class="control-label h3">@Model.TestAnswers[i].Answer.AnswerText</label>
+                </div>
             }
             <table class="table">
                 <tbody>

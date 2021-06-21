@@ -38,7 +38,7 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
             {
                 return NotFound();
             }
-            this.Student = await _context.Students
+            Student = await _context.Students
                 .Include(x => x.Cathedra)
                 .FirstOrDefaultAsync(st => st.User == curentUser);
 
@@ -52,10 +52,17 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
                 .Include(x => x.Teacher).ThenInclude(x => x.User)
                 .AsSplitQuery()
                 .FirstOrDefaultAsync(x => x.Id == id);
-            var lastTests = await _context.TestResults
+
+            if (Lesson == null)
+            {
+                return NotFound();
+            }
+           
+            var lastTest = await _context.TestResults
                 .Include(x => x.Reviewer).ThenInclude(x => x.User)
                 .FirstOrDefaultAsync(tr => tr.Answerer == Student && tr.Topic.Id == Lesson.Id);
-            if (lastTests == null)
+
+            if (lastTest == null)
             {
                 TestResult = new TestResult()
                 {
@@ -65,11 +72,12 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
                 };
                 return Page();
             }
-            if (lastTests.Score.HasValue)
+
+            if (lastTest.Score.HasValue)
             {
                 DisbaleRunTest = true;
             }
-            TestResult = lastTests;
+            TestResult = lastTest;
             return Page();
         }
 
@@ -85,8 +93,8 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
             {
                 return NotFound();
             }
-            this.Student = await _context.Students.Include(x => x.Cathedra).FirstOrDefaultAsync(st => st.User == curentUser);
-            if (this.Student == null)
+            Student = await _context.Students.Include(x => x.Cathedra).FirstOrDefaultAsync(st => st.User == curentUser);
+            if (Student == null)
             {
                 return NotFound();
             }
@@ -96,37 +104,34 @@ namespace ATS.WEB.Areas.Students.Pages.Tests
                 .AsSplitQuery()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            var lastTests = await _context.TestResults.FirstOrDefaultAsync(tr => tr.Answerer == Student && tr.Topic.Id == Lesson.Id);
-            if (lastTests != null)
+            var lastTest = await _context.TestResults.FirstOrDefaultAsync(tr => tr.Answerer == Student && tr.Topic.Id == Lesson.Id);
+            if (lastTest != null)
             {
                 return RedirectToPage("./Pass", new { id = id.ToString(), q = Lesson.Questions.First().Id.ToString() });
             }
 
-            var testres = new TestResult();
-            testres.Answerer = Student;
-            testres.Reviewer = Lesson.Teacher;
-            testres.PassDate = DateTime.Now;
-            testres.Topic = await _context.Lessons.FirstAsync(l => l.Id == Lesson.Id);
-            var ansvers = new List<Answer>();
-            foreach (var question in Lesson.Questions)
+            var testResult = new TestResult()
             {
-                foreach (var answer in question.Answers.Where(a => !a.TestResultId.HasValue))
-                {
-                    var _answer = new Answer()
+                Answerer = Student,
+                Reviewer = Lesson.Teacher,
+                PassDate = DateTime.Now,
+                TopicId = Lesson.Id,
+            };
+
+            testResult.Answers = Lesson.Questions.SelectMany(
+                q =>q.Answers.Select(a=>
+                    new TestAnswer()
                     {
-                        TestResultQuestionId = question.Id,
-                        AnswerText = answer.AnswerText,
-                        IsRight = answer.IsRight,
-                        RightStudent = false,
-                    };
-                    ansvers.Add(_answer);
-                }
-            }
-            testres.Answers = ansvers;
-            var q = Lesson.Questions.First().Id.ToString();
-            _context.TestResults.Add(testres);
-            _context.ChangeTracker.DetectChanges();
+                        AnswerId = a.Id,
+                        QuestionId = q.Id,
+                        TestResult = testResult,
+                        UserAnswer = false,
+                    }
+                ).ToList()
+            ).ToList();
+            _context.TestResults.Add(testResult);
             await _context.SaveChangesAsync();
+            var q = testResult.Answers.First().Question.Id.ToString();
             return RedirectToPage("./Pass", new { id = id.ToString(), q });
         }
 

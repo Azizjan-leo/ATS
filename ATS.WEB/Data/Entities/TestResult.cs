@@ -17,7 +17,7 @@ namespace ATS.WEB.Data.Entities {
         public Teacher Reviewer { get; set; }
         [Display(Name = "Дата сдачи")]
         public DateTime PassDate { get; set; }
-        public List<Answer> Answers { get; set; }
+        public List<TestAnswer> Answers { get; set; }
         [Display(Name = "Результат")]
         public int? Score { get; set; }
     }
