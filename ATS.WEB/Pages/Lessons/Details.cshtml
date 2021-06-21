@@ -1,5 +1,8 @@
 ﻿@page
 @model ATS.WEB.Pages.Lessons.DetailsModel
+@using WEB.Data.Entities;
+@using WEB.Enums;
+@inject SignInManager<ApplicationUser> SignInManager
 
 @{
     ViewData["Title"] = "Details";
@@ -12,13 +15,22 @@
 </div>
 <hr />
 <div>
-    <a href="#" ><h3>Пройти тест</h3></a>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        @if (User.IsInRole(Role.Student.ToString()))
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Students" asp-page="/Tests/Index"><h3>Пройти тест</h3></a>
+            </li>
+        }
+    }
+
 </div>
 <div>
     <a href="#" onclick="history.back(-1);">Назад</a>
 </div>
 @*<div>
-    <div>
-        <partial name="_QuestionsPartial" model="Model.Lesson.Questions" />
-    </div>
-</div>*@
+        <div>
+            <partial name="_QuestionsPartial" model="Model.Lesson.Questions" />
+        </div>
+    </div>*@
