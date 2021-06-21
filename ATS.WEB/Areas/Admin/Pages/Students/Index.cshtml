@@ -2,32 +2,9 @@
 @model ATS.WEB.Areas.Admin.Pages.Students.IndexModel
 
 @{
-    ViewData["Title"] = "Контакты";
+    ViewData["Title"] = "Index";
 }
 
-<h1>Контакты</h1>
+<h1>Рабочий кабинет</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Имя</th>
-            <th>Кафедра</th>
-            <th>Почта</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Student) {
-        <tr>
-            <td>
-                @item.User.Name
-            </td>
-            <td>
-                @item.Cathedra.Name
-            </td>
-            <td>
-                @item.User.Email
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<p><a class="nav-link text-dark" asp-area="Students" asp-page="/Tests/Index">Тесты</a></p>
