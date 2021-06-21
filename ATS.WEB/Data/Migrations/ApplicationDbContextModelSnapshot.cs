@@ -362,25 +362,6 @@ namespace ATS.WEB.Migrations
 
                     b.ToTable("AspNetRoles");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = "312eb2fe-b6bb-49b4-a27c-744e7a602157",
-                            ConcurrencyStamp = "21467acc-7752-49a5-85bb-4c7c7259ef47",
-                            Name = "Admin"
-                        },
-                        new
-                        {
-                            Id = "d151484a-435a-4396-97e8-cc5b2fce2a43",
-                            ConcurrencyStamp = "dd67a25d-342b-4b30-ba23-b384de412a7b",
-                            Name = "Teacher"
-                        },
-                        new
-                        {
-                            Id = "1473ca6d-14fe-4f1b-a2e3-2457e1099770",
-                            ConcurrencyStamp = "86894fff-3fc1-4ab2-b359-44f207b66331",
-                            Name = "Student"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
