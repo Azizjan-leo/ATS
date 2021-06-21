@@ -14,21 +14,6 @@ namespace ATS.WEB.Migrations
                 name: "IX_Answers_TestResultId",
                 table: "Answers");
 
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "74a13404-eccb-45ff-9060-f97e653c2c61");
-
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "9a40d660-a54a-4202-ad0d-2f2c8a4e9bd4");
-
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "a709017d-df15-45fa-a331-9e4b4e3defde");
-
             migrationBuilder.DropColumn(
                 name: "TestResultId",
                 table: "Answers");
@@ -67,21 +52,6 @@ namespace ATS.WEB.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "312eb2fe-b6bb-49b4-a27c-744e7a602157", "21467acc-7752-49a5-85bb-4c7c7259ef47", "Admin", null });
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "d151484a-435a-4396-97e8-cc5b2fce2a43", "dd67a25d-342b-4b30-ba23-b384de412a7b", "Teacher", null });
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "1473ca6d-14fe-4f1b-a2e3-2457e1099770", "86894fff-3fc1-4ab2-b359-44f207b66331", "Student", null });
-
             migrationBuilder.CreateIndex(
                 name: "IX_TestAnswers_AnswerId",
                 table: "TestAnswers",
@@ -102,21 +72,6 @@ namespace ATS.WEB.Migrations
         {
             migrationBuilder.DropTable(
                 name: "TestAnswers");
-
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "1473ca6d-14fe-4f1b-a2e3-2457e1099770");
-
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "312eb2fe-b6bb-49b4-a27c-744e7a602157");
-
-            migrationBuilder.DeleteData(
-                table: "AspNetRoles",
-                keyColumn: "Id",
-                keyValue: "d151484a-435a-4396-97e8-cc5b2fce2a43");
 
             migrationBuilder.AddColumn<int>(
                 name: "TestResultId",
